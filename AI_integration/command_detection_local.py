@@ -63,9 +63,9 @@ CONFIG = {
 
     'elasticsearch': {
         'base_url': 'http://10.10.10.34:9200',
-        'api_key': 'b3NLNnc1d0I4M0hRTHEtc3lLdEQ6ajJENVdvdnRjSS1vRXJaMUdVM3lZdw==',
-        'username': 'elastic',
-        'password': 'M@nhb!nh789',
+        'api_key': '∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎',
+        'username': '∎∎∎∎∎∎∎',
+        'password': '∎∎∎∎∎∎∎',
         'index_pattern': 'logs-endpoint.events.process-*',
         'auth_method': 'basic',
         'verify_ssl': False,
