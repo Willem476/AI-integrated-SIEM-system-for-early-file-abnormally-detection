@@ -1,0 +1,224 @@
+version: "3.7"
+services:
+  thehive:
+    image: strangebee/thehive:5.2
+    container_name: thehive
+    restart: unless-stopped
+    depends_on:
+      - cassandra
+      - elasticsearch
+      - minio
+      - cortex.local
+    mem_limit: 1500m
+    ports:
+      - "0.0.0.0:9000:9000"
+    environment:
+      - JVM_OPTS="-Xms1024M -Xmx1024M"
+    command:
+      - --secret
+      - "lab123456789"
+      - "--cql-hostnames"
+      - "cassandra"
+      - "--index-backend"
+      - "elasticsearch"
+      - "--es-hostnames"
+      - "elasticsearch"
+      - "--s3-endpoint"
+      - "http://minio:9002"
+      - "--s3-access-key"
+      - "minioadmin"
+      - "--s3-secret-key"
+      - "minioadmin"
+      - "--s3-use-path-access-style"
+    volumes:
+      # SỬA Ở ĐÂY: Map file config từ máy thật vào
+      - ./conf/thehive/application.conf:/etc/thehive/application.conf
+    networks:
+      - SOC_NET
+
+  cassandra:
+    image: 'cassandra:4'
+    container_name: cassandra
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:9042:9042"
+    environment:
+      - CASSANDRA_CLUSTER_NAME=TheHive
+    volumes:
+      - cassandradata:/var/lib/cassandra
+    networks:
+      - SOC_NET
+    
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
+    container_name: elasticsearch
+    restart: unless-stopped
+    mem_limit: 1024m # Tăng lên chút cho ổn định
+    ports:
+      - "0.0.0.0:9201:9201"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - cluster.name=hive
+      - http.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearchdata:/usr/share/elasticsearch/data
+    networks:
+      - SOC_NET
+
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio
+    restart: unless-stopped
+    command: ["minio", "server", "/data", "--console-address", ":9001"] 
+    # Lưu ý: Console port đổi sang 9001 để tránh trùng, API port là 9002
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    ports:
+      - "0.0.0.0:9002:9002" # API Port
+      - "0.0.0.0:9003:9001" # Console Port (Truy cập web Minio qua port này)
+    volumes:
+      - "miniodata:/data"
+    networks:
+      - SOC_NET
+
+  cortex.local:
+    image: thehiveproject/cortex:latest
+    container_name: cortex
+    restart: unless-stopped
+    user: "0:0"  # <--- THÊM DÒNG NÀY (Chạy với quyền Root)
+    environment:
+      - job_directory=/tmp/cortex-jobs
+      - docker_job_directory=/root/cortex-jobs
+    volumes:
+      # SỬA Ở ĐÂY: Windows dùng //var/run/docker.sock
+      - //var/run/docker.sock:/var/run/docker.sock
+      - /root/cortex-jobs:/tmp/cortex-jobs
+      - ./cortex/logs:/var/log/cortex
+      # SỬA Ở ĐÂY: Map đúng đường dẫn /etc/cortex
+      - ./conf/cortex/application.conf:/etc/cortex/application.conf
+      #  THÊM DÒNG NÀY VÀO ĐÂY:
+      - ./neurons:/opt/cortex/neurons
+    depends_on:
+      - elasticsearch
+    ports:
+      - "0.0.0.0:9001:9001"
+    networks:
+      - SOC_NET
+      
+
+  
+
+  # DÁN ĐOẠN CODE MỚI VÀO ĐÂY 
+  connector-thehive:
+    image: opencti/connector-thehive:latest
+    environment:
+      # --- CẤU HÌNH KẾT NỐI OPENCTI ---
+      # Lưu ý: Vì OpenCTI KHÔNG chạy trong file này, bạn phải điền URL đầy đủ (VD: https://opencti.namhikelo.id.vn)
+      - OPENCTI_URL=https://opencti.namhikelo.id.vn 
+      - OPENCTI_TOKEN=3d1f4a7e-8e5b-4c21-a93f-62b2c26f65f9
+      - OPENCTI_SSL_VERIFY=false  # <--- THÊM DÒNG NÀY VÀO
+      - CONNECTOR_ID=5b3e2d1a-9f8c-4e7b-a1d0-123456789abc
+      - CONNECTOR_NAME=TheHive
+      - CONNECTOR_SCOPE=thehive
+      - CONNECTOR_LOG_LEVEL=error
+      
+      # --- CẤU HÌNH KẾT NỐI THEHIVE ---
+      # Ở đây TheHive chạy cùng file, nên có thể dùng tên service "thehive" hoặc IP máy
+      - THEHIVE_URL=http://10.10.10.34:9000
+      - THEHIVE_API_KEY=wBdiBTogHE39kdotz0Yy7fM37zphSQXk
+      - THEHIVE_CHECK_SSL=false
+      - THEHIVE_ORGANIZATION_NAME=Test
+      
+      # --- CẤU HÌNH ĐẨY DỮ LIỆU ---
+      - THEHIVE_IMPORT_FROM_DATE=2024-01-01T00:00:00
+      - THEHIVE_IMPORT_ONLY_TLP=0,1,2,3
+      - THEHIVE_IMPORT_ALERTS=true
+      - "THEHIVE_SEVERITY_MAPPING=1:low,2:medium,3:high,4:critical"
+      - THEHIVE_INTERVAL=5
+    restart: always
+    networks:
+      - SOC_NET
+  #  KẾT THÚC ĐOẠN DÁN 
+
+  # ---------------------------------------------------------
+  # PHẦN 3: SHUFFLE (SOAR) - MỚI THÊM VÀO
+  # ---------------------------------------------------------
+  shuffle-frontend:
+    image: ghcr.io/shuffle/shuffle-frontend:latest
+    container_name: shuffle-frontend
+    restart: always
+    ports:
+      - "3001:80"
+      - "3443:443"
+    environment:
+      - BACKEND_HOSTNAME=shuffle-backend
+    networks:
+      - SOC_NET
+    depends_on:
+      - shuffle-backend
+
+  shuffle-backend:
+    image: ghcr.io/shuffle/shuffle-backend:latest
+    container_name: shuffle-backend
+    ports: 
+      - "0.0.0.0:5001:5001"
+    restart: always
+    environment:
+      # Cấu hình dùng chung Elastic với TheHive để tiết kiệm RAM
+      - SHUFFLE_OPENSEARCH_URL=http://10.10.10.34:9200
+      - DATA_DB_ELASTIC=true
+      - ELASTIC_URL=http://10.10.10.34:9200
+      - SHUFFLE_APP_SDK_VERSION=latest
+      - SHUFFLE_WORKER_VERSION=latest
+      - HTTP_PROXY=
+      - HTTPS_PROXY=
+      - SHUFFLE_BASE_URL=http://172.17.0.1:5001
+      - SHUFFLE_LOGS_DISABLED=false
+      - ORG_ID=Shuffle
+      - MOUNT_DOCKER_SOCKET=true
+      - SHUFFLE_BACKEND_URL=http://172.17.0.1:5001 
+    volumes:
+      # Windows map socket cần dùng 2 dấu gạch chéo //
+      - //var/run/docker.sock:/var/run/docker.sock
+      - ./shuffle-files:/shuffle-files
+    networks:
+      - SOC_NET
+    depends_on:
+      - elasticsearch
+
+  shuffle-orborus:
+    image: ghcr.io/shuffle/shuffle-orborus:latest
+    container_name: shuffle-orborus
+    restart: always
+    environment:
+      - SHUFFLE_GRPC_ENDPOINT=172.17.0.1:5001
+      - ORG_ID=Shuffle
+      - ENVIRONMENT_NAME=Shuffle
+      - BASE_URL=http://172.17.0.1:5001
+      - DOCKER_API_VERSION=1.45
+      - SHUFFLE_BASE_URL=http://172.17.0.1:5001
+      - HTTP_PROXY=
+      - HTTPS_PROXY=
+    volumes:
+      # Windows map socket cần dùng 2 dấu gạch chéo //
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - SOC_NET
+    depends_on:
+      - shuffle-backend
+
+  
+
+volumes:
+  miniodata:
+  cassandradata:
+  elasticsearchdata:
+  thehivedata: # (Cái này thực ra ko dùng nữa vì đã map file local, nhưng cứ để cũng dc)
+  mispsqldata:
+
+networks:
+  SOC_NET:
+    driver: bridge
