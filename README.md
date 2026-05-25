@@ -39,7 +39,7 @@ The system doesn't just detect; it responds. When an anomaly is detected, the fo
 3.  **SOAR Execution:** If the score exceeds the threshold (`>60`, HIGH/CRITICAL), Shuffle orchestrates the response.
 4.  **Containment:** The machine is automatically isolated via pfSense.
 5.  **SOC Escalation:** A detailed case is enriched by Cortex/OpenCTI and created in TheHive for final analyst review.
-*More details about the workflow in[ `SOAR_Playbooks`](#).*
+*More details about the workflow in[ `SOAR_Playbooks`](./SOAR_Playbooks).*
 
 ---
 
@@ -47,9 +47,9 @@ The system doesn't just detect; it responds. When an anomaly is detected, the fo
 
 Follow the detailed directories below to start building your lab:
 
-*   [📂 `AI_integration`](#): Feature engineering scripts, and the Random Forest model training guide.
-*   [📂 `system_architecture`](#): Installing and configuring Elasticsearch, Kibana, TheHive, Cortex, Shuffle
-*   [📂 `SOAR_Playbooks`](#): Shuffle workflow JSON files and API integrations for TheHive and Cortex.
+*   [📂 `AI_integration`](./AI_integration): Feature engineering scripts, and the Random Forest model training guide.
+*   [📂 `system_architecture`](./system_architecture): Installing and configuring Elasticsearch, Kibana, TheHive, Cortex, Shuffle
+*   [📂 `SOAR_Playbooks`](./SOAR_Playbooks): Shuffle workflow JSON files and API integrations for TheHive and Cortex.
 
 ## Contributing
 Have ideas to improve the model or add new SOAR playbooks? Feel free to fork the repository, make your changes, and submit a pull request!
