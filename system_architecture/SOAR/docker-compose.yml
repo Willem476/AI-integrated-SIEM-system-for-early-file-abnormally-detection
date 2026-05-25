@@ -31,7 +31,6 @@ services:
       - "minioadmin"
       - "--s3-use-path-access-style"
     volumes:
-      # SỬA Ở ĐÂY: Map file config từ máy thật vào
       - ./conf/thehive/application.conf:/etc/thehive/application.conf
     networks:
       - SOC_NET
@@ -53,7 +52,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
     container_name: elasticsearch
     restart: unless-stopped
-    mem_limit: 1024m # Tăng lên chút cho ổn định
+    mem_limit: 1024m
     ports:
       - "0.0.0.0:9201:9201"
     environment:
@@ -72,13 +71,13 @@ services:
     container_name: minio
     restart: unless-stopped
     command: ["minio", "server", "/data", "--console-address", ":9001"] 
-    # Lưu ý: Console port đổi sang 9001 để tránh trùng, API port là 9002
+    # Console port changed to 9001 to avoid conflicts, API port is 9002
     environment:
       - MINIO_ROOT_USER=minioadmin
       - MINIO_ROOT_PASSWORD=minioadmin
     ports:
       - "0.0.0.0:9002:9002" # API Port
-      - "0.0.0.0:9003:9001" # Console Port (Truy cập web Minio qua port này)
+      - "0.0.0.0:9003:9001" # Console Port
     volumes:
       - "miniodata:/data"
     networks:
@@ -88,18 +87,15 @@ services:
     image: thehiveproject/cortex:latest
     container_name: cortex
     restart: unless-stopped
-    user: "0:0"  # <--- THÊM DÒNG NÀY (Chạy với quyền Root)
+    user: "0:0"  # Run as Root
     environment:
       - job_directory=/tmp/cortex-jobs
       - docker_job_directory=/root/cortex-jobs
     volumes:
-      # SỬA Ở ĐÂY: Windows dùng //var/run/docker.sock
       - //var/run/docker.sock:/var/run/docker.sock
       - /root/cortex-jobs:/tmp/cortex-jobs
       - ./cortex/logs:/var/log/cortex
-      # SỬA Ở ĐÂY: Map đúng đường dẫn /etc/cortex
       - ./conf/cortex/application.conf:/etc/cortex/application.conf
-      #  THÊM DÒNG NÀY VÀO ĐÂY:
       - ./neurons:/opt/cortex/neurons
     depends_on:
       - elasticsearch
@@ -111,28 +107,26 @@ services:
 
   
 
-  # DÁN ĐOẠN CODE MỚI VÀO ĐÂY 
+ 
   connector-thehive:
     image: opencti/connector-thehive:latest
     environment:
-      # --- CẤU HÌNH KẾT NỐI OPENCTI ---
-      # Lưu ý: Vì OpenCTI KHÔNG chạy trong file này, bạn phải điền URL đầy đủ (VD: https://opencti.namhikelo.id.vn)
-      - OPENCTI_URL=https://opencti.namhikelo.id.vn 
-      - OPENCTI_TOKEN=3d1f4a7e-8e5b-4c21-a93f-62b2c26f65f9
-      - OPENCTI_SSL_VERIFY=false  # <--- THÊM DÒNG NÀY VÀO
-      - CONNECTOR_ID=5b3e2d1a-9f8c-4e7b-a1d0-123456789abc
+      # --- OPENCTI CONNECTION CONFIGURATION ---
+      - OPENCTI_URL=
+      - OPENCTI_TOKEN=
+      - OPENCTI_SSL_VERIFY=false
+      - CONNECTOR_ID=
       - CONNECTOR_NAME=TheHive
       - CONNECTOR_SCOPE=thehive
       - CONNECTOR_LOG_LEVEL=error
       
-      # --- CẤU HÌNH KẾT NỐI THEHIVE ---
-      # Ở đây TheHive chạy cùng file, nên có thể dùng tên service "thehive" hoặc IP máy
+      # --- THEHIVE CONNECTION CONFIGURATION ---
       - THEHIVE_URL=http://10.10.10.34:9000
-      - THEHIVE_API_KEY=wBdiBTogHE39kdotz0Yy7fM37zphSQXk
+      - THEHIVE_API_KEY=
       - THEHIVE_CHECK_SSL=false
       - THEHIVE_ORGANIZATION_NAME=Test
       
-      # --- CẤU HÌNH ĐẨY DỮ LIỆU ---
+      # --- DATA PUSH CONFIGURATION ---
       - THEHIVE_IMPORT_FROM_DATE=2024-01-01T00:00:00
       - THEHIVE_IMPORT_ONLY_TLP=0,1,2,3
       - THEHIVE_IMPORT_ALERTS=true
@@ -141,10 +135,9 @@ services:
     restart: always
     networks:
       - SOC_NET
-  #  KẾT THÚC ĐOẠN DÁN 
 
   # ---------------------------------------------------------
-  # PHẦN 3: SHUFFLE (SOAR) - MỚI THÊM VÀO
+  # SHUFFLE (SOAR)
   # ---------------------------------------------------------
   shuffle-frontend:
     image: ghcr.io/shuffle/shuffle-frontend:latest
@@ -167,7 +160,7 @@ services:
       - "0.0.0.0:5001:5001"
     restart: always
     environment:
-      # Cấu hình dùng chung Elastic với TheHive để tiết kiệm RAM
+      # Configuration to share Elastic with TheHive to save RAM
       - SHUFFLE_OPENSEARCH_URL=http://10.10.10.34:9200
       - DATA_DB_ELASTIC=true
       - ELASTIC_URL=http://10.10.10.34:9200
@@ -181,7 +174,6 @@ services:
       - MOUNT_DOCKER_SOCKET=true
       - SHUFFLE_BACKEND_URL=http://172.17.0.1:5001 
     volumes:
-      # Windows map socket cần dùng 2 dấu gạch chéo //
       - //var/run/docker.sock:/var/run/docker.sock
       - ./shuffle-files:/shuffle-files
     networks:
@@ -203,7 +195,6 @@ services:
       - HTTP_PROXY=
       - HTTPS_PROXY=
     volumes:
-      # Windows map socket cần dùng 2 dấu gạch chéo //
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - SOC_NET
@@ -216,7 +207,7 @@ volumes:
   miniodata:
   cassandradata:
   elasticsearchdata:
-  thehivedata: # (Cái này thực ra ko dùng nữa vì đã map file local, nhưng cứ để cũng dc)
+  thehivedata:
   mispsqldata:
 
 networks:
