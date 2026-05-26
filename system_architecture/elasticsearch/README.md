@@ -47,8 +47,9 @@ network.host: <YOUR_MACHINE_IP>
 http.port: 9200
 
 # Explicitly disable SSL/Certs for HTTP and Transport layers
-xpack.security.http.ssl.enabled: false
-xpack.security.transport.ssl.enabled: false
+xpack.security.http.ssl:
+  enabled: false
+  keystore.path: certs/http.p12
 ```
 *(Save and exit nano: Press `CTRL+X`, then type `Y`, and press `Enter`)*
 
