@@ -46,7 +46,7 @@ Locate and modify the network settings, and explicitly disable SSL to allow the 
 network.host: <YOUR_MACHINE_IP>
 http.port: 9200
 
-# Explicitly disable SSL/Certs for HTTP and Transport layers
+# Explicitly disable SSL/Certs 
 xpack.security.http.ssl:
   enabled: false
   keystore.path: certs/http.p12
