@@ -8,6 +8,7 @@ The infrastructure is broken down into the following key components:
 
 *   [📂 **`elasticsearch/`**](./elasticsearch/): Contains configuration files (e.g., `elasticsearch.yml`) for setting up the Elasticsearch cluster. This acts as the central data lake, securely storing and indexing log data collected from endpoint agents.
 *   [📂 **`kibana/`**](./kibana/): Contains configuration files (e.g., `kibana.yml`) for Kibana. This provides the graphical user interface for our SIEM, allowing analysts to visualize data, monitor alerts, and hunt for threats.
+* [📂 **`fleet/`**](./fleet/): Contains configurations to spin up the Fleet Server container. This serves as the centralized management hub, allowing you to control, update, and push security integrations to all deployed Elastic Agents from a single console.
 *   [📂 **`SOAR/`**](./SOAR/): Contains the deployment scripts (including `docker-compose.yml`) for the Security Orchestration, Automation, and Response stack. This component is the brain of our automated incident response, orchestrating workflows between detection tools and enforcement points.
 
 ## Architecture Overview & Data Flow
@@ -29,4 +30,5 @@ Detailed commands and setup instructions to deploy the Elasticsearch, Kibana, an
 Please navigate to each directory to follow the specific installation steps:
 * Navigate to the [**`elasticsearch`**](./elasticsearch/) folder for database setup.
 * Navigate to the [**`kibana`**](./kibana/) folder for dashboard deployment.
+* Navigate to the [**`fleet`**](./fleet/) folder to set up the centralized agent management node (No-SSL instructions included).
 * Navigate to the [**`SOAR`**](./SOAR/) folder to spin up the automation tools.
