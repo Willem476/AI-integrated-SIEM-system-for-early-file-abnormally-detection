@@ -183,5 +183,4 @@ pid.file: /run/kibana/kibana.pid
 # This value must be a whole number greater than zero. Defaults to 100_000
 #unifiedSearch.autocomplete.valueSuggestions.terminateAfter: 100000
 
-xpack.encryptedSavedObjects.encryptionKey: "76b8542717433c5aca6758983e76d84b"
-xpack.reporting.encryptionKey: "e0b2619b8a1018f4a51f02431fe97c58"
+
