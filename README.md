@@ -36,7 +36,7 @@ The system doesn't just detect; it responds. When an anomaly is detected, the fo
 1.  **Alert Generation:** The Random Forest model flags an anomaly.
 2.  **Risk Scoring:** The system calculates a score (`0-100`).
     *   *Formula: 50% ML Probability + 30% MITRE Score + 20% IOC Score*.
-3.  **SOAR Execution:** If the score exceeds the threshold (`>20`, HIGH/CRITICAL), Shuffle orchestrates the response.
+3.  **SOAR Execution:** If the score exceeds the threshold (`>20`, LOW/MEDIUM/HIGH/CRITICAL), Shuffle orchestrates the response.
 4.  **Containment:** The machine is automatically isolated via pfSense.
 5.  **SOC Escalation:** A detailed case is enriched by Cortex/OpenCTI and created in TheHive for final analyst review.
 *More details about the workflow in[ `SOAR_Playbooks`](./SOAR_Playbooks).*
