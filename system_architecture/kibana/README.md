@@ -1,6 +1,6 @@
 # Setting Up Kibana: The Visualization Interface of the ELK Stack (No SSL/Certs)
 
-To put it đơn giản, **Kibana** is the window into your ELK Stack. It is a powerful frontend application that allows you to search, analyze, and visualize the log data indexed in Elasticsearch. 
+**Kibana** is the window into your ELK Stack. It is a powerful frontend application that allows you to search, analyze, and visualize the log data indexed in Elasticsearch. 
 
 With Kibana, you can transform millions of raw, dry log lines into dynamic, interactive dashboards and graphs, making threat hunting, system monitoring, and incident investigation significantly faster and more intuitive.
 
