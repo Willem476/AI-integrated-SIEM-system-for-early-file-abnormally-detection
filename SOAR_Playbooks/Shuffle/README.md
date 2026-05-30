@@ -67,7 +67,10 @@ Below are the exact configurations for every Node in this workflow. Sensitive va
 * **App:** Shuffle Tools
 * **Action:** repeat_back_to_me
 * **Parameters:**
-* `call`: `$exec`<img width="841" height="495" alt="image" src="https://github.com/user-attachments/assets/5a92b005-bb31-44e8-8b98-fad5d79e8cc4" />
+* `call`: `$exec`
+
+
+  <img width="841" height="495" alt="image" src="https://github.com/user-attachments/assets/5a92b005-bb31-44e8-8b98-fad5d79e8cc4" />
 
 
 
@@ -82,6 +85,9 @@ Below are the exact configurations for every Node in this workflow. Sensitive va
 * `replace_string`: `/`
 * `ignore_case`: `false`
 
+  <img width="675" height="454" alt="image" src="https://github.com/user-attachments/assets/56470a5e-15fa-45ba-bc9b-cfa69ce9a8d8" />
+
+
 
 
 ### Node 3: Shuffle_Tools_2
@@ -93,6 +99,9 @@ Below are the exact configurations for every Node in this workflow. Sensitive va
 * `regex`: `"`
 * `replace_string`: `'`
 * `ignore_case`: `false`
+
+  <img width="618" height="773" alt="image" src="https://github.com/user-attachments/assets/30c44ef9-2922-4d18-8521-afd65a88ff2b" />
+
 
 
 
@@ -106,15 +115,8 @@ Below are the exact configurations for every Node in this workflow. Sensitive va
 * `replace_string`: `/`
 * `ignore_case`: `false`
 
+  <img width="614" height="758" alt="image" src="https://github.com/user-attachments/assets/79b808ea-c87b-4bbf-80c3-059be5230be8" />
 
-
-### Node 5: IPv4_Filter
-
-* **App:** Shuffle Tools
-* **Action:** regex_capture_group
-* **Parameters:**
-* `input_data`: `$exec.host_ip`
-* `regex`: `\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`
 
 
 
@@ -207,6 +209,9 @@ else:
 
 ```
 
+<img width="603" height="848" alt="image" src="https://github.com/user-attachments/assets/aa423db9-d07d-44f7-ba94-5f9cbf5edd8a" />
+
+
 ### Node 7: TheHive_1
 
 * **App:** TheHive
@@ -230,6 +235,9 @@ else:
 
 ```
 
+<img width="606" height="849" alt="image" src="https://github.com/user-attachments/assets/4fc7715c-caba-41da-82e4-bfd7534a873d" />
+
+
 ### Node 8: Create_Case
 
 * **App:** TheHive
@@ -251,6 +259,9 @@ else:
 }
 
 ```
+
+<img width="592" height="826" alt="image" src="https://github.com/user-attachments/assets/5c36e108-a901-477f-8655-86a73841a7cc" />
+
 
 ### Node 9: TheHive_4
 
@@ -274,6 +285,9 @@ else:
 
 ```
 
+<img width="617" height="824" alt="image" src="https://github.com/user-attachments/assets/f6132ee0-531c-4a59-9348-665e47eba0c9" />
+
+
 ### Node 10: TheHive_5
 
 * **App:** TheHive
@@ -295,6 +309,9 @@ else:
 }
 
 ```
+
+<img width="602" height="822" alt="image" src="https://github.com/user-attachments/assets/60841864-4c52-4546-a212-e804f18af14e" />
+
 
 ### Node 11: TheHive_6
 
@@ -318,6 +335,9 @@ else:
 
 ```
 
+<img width="586" height="824" alt="image" src="https://github.com/user-attachments/assets/1cb1d032-1394-4ef9-8dde-8c263d9a26f6" />
+
+
 ### Node 12: Cortex_1
 
 * **App:** Cortex
@@ -339,6 +359,9 @@ else:
 }
 
 ```
+
+<img width="593" height="839" alt="image" src="https://github.com/user-attachments/assets/7647365f-2df0-41a1-84ba-5de4c5a31a0e" />
+
 
 ### Node 13: Cortex_1_copy
 
@@ -362,6 +385,9 @@ else:
 
 ```
 
+<img width="601" height="846" alt="image" src="https://github.com/user-attachments/assets/409e53cb-e1b5-4e18-a175-744d8ed66b08" />
+
+
 ### Node 14: http_1
 
 * **App:** http
@@ -383,6 +409,9 @@ else:
 
 ```
 
+<img width="613" height="840" alt="image" src="https://github.com/user-attachments/assets/559bef9f-1634-43aa-94d7-59eefcb66924" />
+
+
 ### Node 15: Observable1
 
 * **App:** http
@@ -402,6 +431,9 @@ else:
 }
 
 ```
+
+<img width="613" height="850" alt="image" src="https://github.com/user-attachments/assets/d71a3778-1c59-4c10-ab8b-333860a714be" />
+
 
 ### Node 16: Observable2
 
@@ -423,6 +455,9 @@ else:
 
 ```
 
+<img width="604" height="825" alt="image" src="https://github.com/user-attachments/assets/0824761d-44c2-4558-9dc1-64993cfab55e" />
+
+
 ### Node 17: Observable1_copy
 
 * **App:** http
@@ -442,6 +477,9 @@ else:
 }
 
 ```
+
+<img width="609" height="841" alt="image" src="https://github.com/user-attachments/assets/f44b5557-dfc1-40ee-a8a4-afc5ff66101d" />
+
 
 ### Node 18: Observable1_copy_copy
 
@@ -463,6 +501,9 @@ else:
 
 ```
 
+<img width="603" height="832" alt="image" src="https://github.com/user-attachments/assets/73f34610-306b-44d3-a405-cd3ea5372082" />
+
+
 ### Node 19: http_2
 
 * **App:** http
@@ -483,6 +524,9 @@ else:
 
 ```
 
+<img width="614" height="850" alt="image" src="https://github.com/user-attachments/assets/75d6888b-1046-428f-85bb-b6499ff038b3" />
+
+
 ### Node 20: http_2_copy
 
 * **App:** http
@@ -502,6 +546,9 @@ else:
 }
 
 ```
+
+<img width="600" height="852" alt="image" src="https://github.com/user-attachments/assets/b83f9332-1ea0-4537-8c85-3705fb3e2893" />
+
 
 ### Node 21: Isolate_Machine
 
@@ -524,6 +571,9 @@ else:
 
 ```
 
+<img width="605" height="829" alt="image" src="https://github.com/user-attachments/assets/7c72989e-432c-4e72-be81-3d905a3ff123" />
+
+
 ### Node 22: Isolate_Machine_copy
 
 * **App:** http
@@ -544,6 +594,9 @@ else:
 }
 
 ```
+
+<img width="608" height="852" alt="image" src="https://github.com/user-attachments/assets/bb17bd90-d312-451d-9168-0ad4e52c8601" />
+
 
 ### Node 23: email_2_copy
 
@@ -589,6 +642,9 @@ Access TheHive to handle this Case: http://<YOUR_THEHIVE_IP>:9000
 Automated notification generated by the Shuffle SOAR system
 
 ```
+
+<img width="611" height="813" alt="image" src="https://github.com/user-attachments/assets/f77ee7d7-ae0d-42b5-8cd0-51cbbdae8e83" />
+
 
 ### Node 24: email_3
 
@@ -667,6 +723,9 @@ Automated notification generated by the Shuffle SOAR system
 
 ```
 
+<img width="608" height="851" alt="image" src="https://github.com/user-attachments/assets/3f913801-5d35-4243-98d3-19d02d9c5011" />
+
+
 ### Node 25: email_3_copy
 
 * **App:** email
@@ -744,6 +803,9 @@ Automated notification generated by the Shuffle SOAR system
 
 ```
 
+<img width="590" height="842" alt="image" src="https://github.com/user-attachments/assets/b95a7d30-c052-412c-bc4c-d6d77062867a" />
+
+
 ### Node 26: email_4
 
 * **App:** email
@@ -802,3 +864,6 @@ Automated notification generated by the Shuffle SOAR system
 </div>
 
 ```
+
+<img width="618" height="934" alt="image" src="https://github.com/user-attachments/assets/62db1216-9a8f-4185-b206-768a528f4f73" />
+
