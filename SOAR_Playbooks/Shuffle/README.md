@@ -1,7 +1,62 @@
 
-### 1. Shuffle Tools Group (Data Pre-processing)
+# Shuffle SOAR - Incident Response Workflow
 
-**Node 1: Shuffle_Tools_1**
+This document provides a detailed guide on the configuration and how to build an Automated Incident Response Workflow for Malware and Suspicious Command Line alerts on the Shuffle SOAR platform.
+
+---
+
+## Workflow Branches (Conditions)
+
+This workflow utilizes branching logic to determine the appropriate response based on the alert type and the severity of the threat.
+
+### 1. Branching by Alert Type
+
+After the file path is sanitized in the `String_Modifier` node, the data is evaluated to route to the correct sub-workflow:
+
+* **Route to Command Line Analysis (`Shuffle_Tools_2`):**
+* **Condition:** If `$exec.alert_type` **equals** `command_line_anomaly`
+
+
+* **Route to Malware Analysis (`VT_Tools`):**
+* **Condition:** If `$exec.alert_type` **does not equal** `command_line_anomaly`
+
+
+
+### 2. Branching by Risk Level (Malware Sub-workflow)
+
+After the Python script analyzes the hash, the system decides whether to isolate the host or only create an alert based on severity.
+
+* **Route to Create Alert Only (`TheHive_1`):**
+* **Condition 1:** If `$exec.risk_level` **does not equal** `CRITICAL`
+* **Condition 2:** If `$exec.risk_level` **does not equal** `HIGH`
+
+
+* **Route to Automated Containment (`Isolate_Machine`):**
+* **Condition 1:** If `$exec.risk_level` **does not equal** `LOW`
+* **Condition 2:** If `$exec.risk_level` **does not equal** `MEDIUM`
+
+
+
+### 3. Branching by Risk Level (Command Line Sub-workflow)
+
+After an initial email notification is sent regarding the suspicious command line, the workflow decides the next containment steps.
+
+* **Route to Automated Containment (`Isolate_Machine_copy`):**
+* **Condition:** If `$exec.risk_level` **does not equal** `LOW`
+
+
+* **Route to Create Case Only (`TheHive_6`):**
+* **Condition:** If `$exec.risk_level` **equals** `LOW`
+
+
+
+---
+
+## Step-by-Step Node Configurations
+
+Below are the exact configurations for every Node in this workflow. Sensitive values such as API Keys, Tokens, and Emails have been replaced with placeholders.
+
+### Node 1: Shuffle_Tools_1
 
 * **App:** Shuffle Tools
 * **Action:** repeat_back_to_me
@@ -10,7 +65,7 @@
 
 
 
-**Node 2: String_Modifier**
+### Node 2: String_Modifier
 
 * **App:** Shuffle Tools
 * **Action:** regex_replace
@@ -22,7 +77,7 @@
 
 
 
-**Node 3: Shuffle_Tools_2**
+### Node 3: Shuffle_Tools_2
 
 * **App:** Shuffle Tools
 * **Action:** regex_replace
@@ -34,7 +89,7 @@
 
 
 
-**Node 4: Shuffle_Tools_3**
+### Node 4: Shuffle_Tools_3
 
 * **App:** Shuffle Tools
 * **Action:** regex_replace
@@ -46,7 +101,7 @@
 
 
 
-**Node 5: IPv4_Filter**
+### Node 5: IPv4_Filter
 
 * **App:** Shuffle Tools
 * **Action:** regex_capture_group
@@ -56,14 +111,11 @@
 
 
 
-**Node 6: VT_Tools**
+### Node 6: VT_Tools
 
 * **App:** Shuffle Tools
 * **Action:** execute_python
 * **Parameters:**
-* `code`:
-
-
 
 ```python
 import requests
@@ -84,7 +136,7 @@ def get_vt_data(url, headers):
     except: return None
 
 def get_ha_report(file_hash, ha_key):
-    url = "https://www.hybrid-analysis.com/api/v2/search/hash"
+    url = "[https://www.hybrid-analysis.com/api/v2/search/hash](https://www.hybrid-analysis.com/api/v2/search/hash)"
     headers = {
         "api-key": ha_key,
         "user-agent": "Falcon Sandbox",
@@ -117,8 +169,8 @@ if not file_id or len(file_id) < 32:
     print("Invalid Hash.")
 else:
     vt_headers = {"x-apikey": VT_API_KEY}
-    vt_info = get_vt_data(f"https://www.virustotal.com/api/v3/files/{file_id}", vt_headers)
-    vt_beh = get_vt_data(f"https://www.virustotal.com/api/v3/files/{file_id}/behaviours", vt_headers)
+    vt_info = get_vt_data(f"[https://www.virustotal.com/api/v3/files/](https://www.virustotal.com/api/v3/files/){file_id}", vt_headers)
+    vt_beh = get_vt_data(f"[https://www.virustotal.com/api/v3/files/](https://www.virustotal.com/api/v3/files/){file_id}/behaviours", vt_headers)
     ha_info = get_ha_report(file_id, HA_API_KEY)
 
     md = f"## THREAT INTEL REPORT\n"
@@ -148,11 +200,7 @@ else:
 
 ```
 
----
-
-### 2. TheHive Group (Incident Management)
-
-**Node 7: TheHive_1**
+### Node 7: TheHive_1
 
 * **App:** TheHive
 * **Action:** post_create_alert
@@ -175,7 +223,7 @@ else:
 
 ```
 
-**Node 8: Create_Case**
+### Node 8: Create_Case
 
 * **App:** TheHive
 * **Action:** post_create_case
@@ -197,11 +245,29 @@ else:
 
 ```
 
-**Node 9: TheHive_4**
+### Node 9: TheHive_4
 
-* (Configuration is identical to Node 8: Create_Case)
+* **App:** TheHive
+* **Action:** post_create_case
+* **Parameters:**
+* `ssl_verify`: `False`
+* `to_file`: `False`
+* `headers`: `Content-Type=application/json\nAccept=application/json`
+* `body`:
 
-**Node 10: TheHive_5**
+
+
+```json
+{
+  "title": "$exec.alert_type: $exec.file_name",
+  "description": "Host: $exec.agent_name | Path: $string_modifier \n $vt_tools.message",
+  "severity": $exec.severity,
+  "source": "Shuffle-SOAR"
+}
+
+```
+
+### Node 10: TheHive_5
 
 * **App:** TheHive
 * **Action:** post_create_case
@@ -223,15 +289,29 @@ else:
 
 ```
 
-**Node 11: TheHive_6**
+### Node 11: TheHive_6
 
-* (Configuration is identical to Node 10: TheHive_5)
+* **App:** TheHive
+* **Action:** post_create_case
+* **Parameters:**
+* `ssl_verify`: `False`
+* `to_file`: `False`
+* `headers`: `Content-Type=application/json\nAccept=application/json`
+* `body`:
 
----
 
-### 3. Cortex Group (Automated Analysis)
 
-**Node 12: Cortex_1**
+```json
+{
+  "title": "Alert: $exec.alert_type on host $ipv4_filter.result",
+  "description": "### SUSPICIOUS PROCESS ALERT DETAILS\n\n- **Alert Name:** $exec.alert_type\n- **Host:** $exec.host",
+  "severity": $exec.severity,
+  "source": "Shuffle-SOAR"
+}
+
+```
+
+### Node 12: Cortex_1
 
 * **App:** Cortex
 * **Action:** post_run_analyzer
@@ -253,15 +333,29 @@ else:
 
 ```
 
-**Node 13: Cortex_1_copy**
+### Node 13: Cortex_1_copy
 
-* (Configuration is identical to Node 12: Cortex_1)
+* **App:** Cortex
+* **Action:** post_run_analyzer
+* **Parameters:**
+* `ssl_verify`: `False`
+* `to_file`: `False`
+* `analyzer_id`: `8e07d997fac90f4a9a71f13a2a6c7bac/run`
+* `headers`: `Content-Type: application/json\nAuthorization: Bearer <YOUR_CORTEX_TOKEN>`
+* `body`:
 
----
 
-### 4. HTTP Group (External API Interaction)
 
-**Node 14: http_1**
+```json
+{
+  "data": "$exec.file_hash_sha256",
+  "dataType": "hash",
+  "tlp": 2
+}
+
+```
+
+### Node 14: http_1
 
 * **App:** http
 * **Action:** POST
@@ -282,7 +376,7 @@ else:
 
 ```
 
-**Node 15: Observable1**
+### Node 15: Observable1
 
 * **App:** http
 * **Action:** POST
@@ -302,11 +396,27 @@ else:
 
 ```
 
-**Node 16: Observable2**
+### Node 16: Observable2
 
-* (Configuration is identical to Node 15: Observable1)
+* **App:** http
+* **Action:** POST
+* **Parameters:**
+* `verify`: `false`
+* `headers`: `Content-Type: application/json\nAuthorization: Bearer <YOUR_HTTP_TOKEN>`
+* `body`:
 
-**Node 17: Observable1_copy**
+
+
+```json
+{
+  "dataType": "hash",
+  "data": "$exec.file_hash_sha256",
+  "message": "### MALWARE DETECTION DETAILS\n\n| Information Field | Value |\n| :--- | :--- |\n| **Alert ID** | $exec.alert_id |"
+}
+
+```
+
+### Node 17: Observable1_copy
 
 * **App:** http
 * **Action:** POST
@@ -326,11 +436,27 @@ else:
 
 ```
 
-**Node 18: Observable1_copy_copy**
+### Node 18: Observable1_copy_copy
 
-* (Configuration is identical to Node 17: Observable1_copy)
+* **App:** http
+* **Action:** POST
+* **Parameters:**
+* `verify`: `false`
+* `headers`: `Content-Type: application/json\nAuthorization: Bearer <YOUR_HTTP_TOKEN>`
+* `body`:
 
-**Node 19: http_2**
+
+
+```json
+{
+  "dataType": "hostname",
+  "data": "$exec.host",
+  "message": "### AFFECTED HOST DETAILS\n\n| Information Field | Value |\n| :--- | :--- |\n| **Alert Name** | $exec.alert_type |"
+}
+
+```
+
+### Node 19: http_2
 
 * **App:** http
 * **Action:** POST
@@ -350,10 +476,16 @@ else:
 
 ```
 
-**Node 20: http_2_copy**
+### Node 20: http_2_copy
 
-* (Configuration is similar to Node 19, but referencing a different artifactId)
-* **Body:**
+* **App:** http
+* **Action:** POST
+* **Parameters:**
+* `verify`: `false`
+* `headers`: `Authorization: Bearer <YOUR_HTTP_TOKEN>\nContent-Type: application/json`
+* `body`:
+
+
 
 ```json
 {
@@ -364,7 +496,7 @@ else:
 
 ```
 
-**Node 21: Isolate_Machine**
+### Node 21: Isolate_Machine
 
 * **App:** http
 * **Action:** PATCH
@@ -379,13 +511,13 @@ else:
 {
   "id": 2,
   "address": ["$ipv4_filter.result"],
-  "detail": ["Isolation command from Shuffle"],
+  "detail": ["Test block from Shuffle"],
   "apply": true
 }
 
 ```
 
-**Node 22: Isolate_Machine_copy**
+### Node 22: Isolate_Machine_copy
 
 * **App:** http
 * **Action:** PATCH
@@ -400,47 +532,266 @@ else:
 {
   "id": 2,
   "address": ["10.10.10.53"],
-  "detail": ["Isolation command from Shuffle"],
+  "detail": ["Test block from Shuffle"],
   "apply": true
 }
 
 ```
 
----
-
-### 5. Email Group (Notifications)
-
-**Node 23: email_2_copy**
+### Node 23: email_2_copy
 
 * **App:** email
 * **Action:** send_email_shuffle
 * **Parameters:**
 * `recipients`: `<YOUR_EMAIL_ADDRESS>`
 * `subject`: `[SOC ALERT] $exec.alert_type: $exec.file_name`
-* `body`: `[HIGH SEVERITY ALERT] SUSPICIOUS BEHAVIOR DETECTED\n\nThe Security Operations Center (SOC) system has just recorded...`
+* `body`:
 
 
 
-**Node 24: email_3**
+```text
+[HIGH SEVERITY ALERT] SUSPICIOUS BEHAVIOR DETECTED
+
+The Security Operations Center (SOC) system has just recorded a security alert. Incident Response (IR) team is required to investigate immediately!
+
+GENERAL INFORMATION
+---------------------------------------------------
+Alert Name: $exec.alert_type
+Incident ID: $exec.alert_id
+Time Detected: $exec.detected_at
+Risk Level: $exec.risk_level (Score: $exec.risk_score/100)
+
+ENDPOINT INFORMATION
+---------------------------------------------------
+Hostname: $exec.agent_name
+IP Address: $exec.host_ip
+
+PROCESS / MALWARE DETAILS
+---------------------------------------------------
+File Name: $exec.file_name
+File Path: $exec.file_path
+Hash (SHA-256): $exec.file_hash_sha256
+
+RECOMMENDED NEXT STEPS:
+1. Immediately check the process history of this endpoint on the monitoring tool.
+2. If confirmed as malware, activate the IP Isolation workflow.
+3. Collect the file sample (Hash) for deep analysis in a Sandbox environment.
+
+Access TheHive to handle this Case: http://<YOUR_THEHIVE_IP>:9000
+---------------------------------------------------
+Automated notification generated by the Shuffle SOAR system
+
+```
+
+### Node 24: email_3
 
 * **App:** email
 * **Action:** send_email_shuffle
 * **Parameters:**
 * `recipients`: `<YOUR_EMAIL_ADDRESS>`
 * `subject`: `[BLOCKED BY SOC_SYSTEM]`
-* `body`: `<div style="font-family: Arial, Helvetica, sans-serif; max-width: 650px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">...`
+* `body`:
 
 
 
-**Node 25: email_3_copy**
+```html
+<div style="font-family: Arial, Helvetica, sans-serif; max-width: 650px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+  <div style="background-color: #d32f2f; color: #ffffff; padding: 12px 15px; text-align: center;">
+    <h2 style="margin: 0; font-size: 17px; letter-spacing: 1px;">[SOC NOTIFICATION] MACHINE ISOLATION SUCCESSFUL</h2>
+  </div>
+  <div style="padding: 15px 20px; background-color: #ffffff; color: #333333;">
+    <p style="font-size: 14px; line-height: 1.5; margin: 0 0 15px 0;">
+      The SOAR system automatically executed a firewall block command due to detected malicious behavior.<br>
+      <span style="color: #2e7d32; font-weight: bold;">Network propagation risk has been successfully mitigated!</span>
+    </p>
+    <h3 style="font-size: 15px; border-bottom: 2px solid #eeeeee; padding-bottom: 3px; margin: 0 0 10px 0; color: #d32f2f;">Alert Information</h3>
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 15px;">
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; width: 35%;"><strong>Incident Name:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-weight: bold; color: #333;">$exec.alert_type (Code: $exec.alert_id)</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Detected File:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-family: monospace;">$exec.file_name</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Path:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-family: monospace;">$exec.file_path</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Severity:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; color: #d32f2f; font-weight: bold;">$exec.risk_level (Level $exec.severity)</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Time Detected:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;">$exec.detected_at</td>
+      </tr>
+    </table>
+    <h3 style="font-size: 15px; border-bottom: 2px solid #eeeeee; padding-bottom: 3px; margin: 0 0 10px 0; color: #1976d2;">Isolation Details</h3>
+    <div style="background-color: #f8f9fa; border-left: 4px solid #4caf50; padding: 10px 15px; margin: 0 0 15px 0; border-radius: 0 4px 4px 0;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <tr>
+          <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; width: 35%;"><strong>Hostname:</strong></td>
+          <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-family: monospace; font-size: 14px;"><b>$exec.agent_name</b></td>
+        </tr>
+        <tr>
+          <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Blocked IP:</strong></td>
+          <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-family: monospace; font-size: 14px; color: #d32f2f;"><b>$exec.host_ip</b></td>
+        </tr>
+        <tr>
+          <td style="padding: 5px 0;"><strong>Status:</strong></td>
+          <td style="padding: 5px 0; color: #2e7d32; font-weight: bold;">Success</td>
+        </tr>
+      </table>
+    </div>
+    <div style="background-color: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 10px 15px; border-radius: 4px; font-size: 13px; line-height: 1.5; margin-bottom: 15px;">
+      <strong>Action Required:</strong> The machine has been disconnected from the LAN/Internet. The IT team is requested to go directly to the site to scan for malware and remediate before requesting network reconnection.
+    </div>
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 5px;">
+      <a href="http://<YOUR_THEHIVE_IP>:9000/cases/$create_case.body._id/details" style="background-color: #1976d2; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 13px; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">View Case Details on TheHive</a>
+    </div>
+  </div>
+  <div style="background-color: #f1f1f1; padding: 10px; text-align: center; border-top: 1px solid #e0e0e0;">
+    <p style="margin: 0; font-size: 11px; color: #666666; font-style: italic;">
+      Automated notification generated by the Shuffle SOAR system
+    </p>
+  </div>
+</div>
 
-* (Configuration is identical to Node 24: email_3)
+```
 
-**Node 26: email_4**
+### Node 25: email_3_copy
+
+* **App:** email
+* **Action:** send_email_shuffle
+* **Parameters:**
+* `recipients`: `<YOUR_EMAIL_ADDRESS>`
+* `subject`: `[BLOCKED BY SOC_SYSTEM]`
+* `body`:
+
+
+
+```html
+<div style="font-family: Arial, Helvetica, sans-serif; max-width: 650px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+  <div style="background-color: #d32f2f; color: #ffffff; padding: 12px 15px; text-align: center;">
+    <h2 style="margin: 0; font-size: 17px; letter-spacing: 1px;">[SOC NOTIFICATION] MACHINE ISOLATION SUCCESSFUL</h2>
+  </div>
+  <div style="padding: 15px 20px; background-color: #ffffff; color: #333333;">
+    <p style="font-size: 14px; line-height: 1.5; margin: 0 0 15px 0;">
+      The SOAR system automatically executed a firewall block command due to detected malicious behavior.<br>
+      <span style="color: #2e7d32; font-weight: bold;">Network propagation risk has been successfully mitigated!</span>
+    </p>
+    <h3 style="font-size: 15px; border-bottom: 2px solid #eeeeee; padding-bottom: 3px; margin: 0 0 10px 0; color: #d32f2f;">Alert Information</h3>
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 15px;">
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; width: 35%;"><strong>Incident Name:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-weight: bold; color: #333;">$exec.alert_type (Code: $exec.alert_id)</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Detected File:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-family: monospace;">$exec.file_name</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Path:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-family: monospace;">$exec.file_path</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Severity:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; color: #d32f2f; font-weight: bold;">$exec.risk_level (Level $exec.severity)</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Time Detected:</strong></td>
+        <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;">$exec.detected_at</td>
+      </tr>
+    </table>
+    <h3 style="font-size: 15px; border-bottom: 2px solid #eeeeee; padding-bottom: 3px; margin: 0 0 10px 0; color: #1976d2;">Isolation Details</h3>
+    <div style="background-color: #f8f9fa; border-left: 4px solid #4caf50; padding: 10px 15px; margin: 0 0 15px 0; border-radius: 0 4px 4px 0;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <tr>
+          <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; width: 35%;"><strong>Hostname:</strong></td>
+          <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-family: monospace; font-size: 14px;"><b>$exec.agent_name</b></td>
+        </tr>
+        <tr>
+          <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee;"><strong>Blocked IP:</strong></td>
+          <td style="padding: 5px 0; border-bottom: 1px solid #eeeeee; font-family: monospace; font-size: 14px; color: #d32f2f;"><b>$exec.host_ip</b></td>
+        </tr>
+        <tr>
+          <td style="padding: 5px 0;"><strong>Status:</strong></td>
+          <td style="padding: 5px 0; color: #2e7d32; font-weight: bold;">Success</td>
+        </tr>
+      </table>
+    </div>
+    <div style="background-color: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 10px 15px; border-radius: 4px; font-size: 13px; line-height: 1.5; margin-bottom: 15px;">
+      <strong>Action Required:</strong> The machine has been disconnected from the LAN/Internet. The IT team is requested to go directly to the site to scan for malware and remediate before requesting network reconnection.
+    </div>
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 5px;">
+      <a href="http://<YOUR_THEHIVE_IP>:9000/cases/$create_case.body._id/details" style="background-color: #1976d2; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 13px; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">View Case Details on TheHive</a>
+    </div>
+  </div>
+  <div style="background-color: #f1f1f1; padding: 10px; text-align: center; border-top: 1px solid #e0e0e0;">
+    <p style="margin: 0; font-size: 11px; color: #666666; font-style: italic;">
+      Automated notification generated by the Shuffle SOAR system
+    </p>
+  </div>
+</div>
+
+```
+
+### Node 26: email_4
 
 * **App:** email
 * **Action:** send_email_shuffle
 * **Parameters:**
 * `recipients`: `<YOUR_EMAIL_ADDRESS>`
 * `subject`: `[SOC ALERT] $exec.alert_type`
-* `body`: `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 680px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background-color: #fff...">...`
+* `body`:
+
+
+
+```html
+<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 680px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background-color: #ffffff;">
+  <div style="background-color: #f39c12; color: #ffffff; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+    <h2 style="margin: 0; font-size: 20px; letter-spacing: 1px;">[SOC ALERT]</h2>
+    <p style="margin: 8px 0 0 0; font-size: 16px; font-weight: 500;">SUSPICIOUS COMMAND LINE BEHAVIOR</p>
+  </div>
+  <div style="padding: 25px; color: #333333;">
+    <p style="font-size: 15px; line-height: 1.6; margin-top: 0;">
+      The system has detected an account executing commands that indicate potential scanning or sensitive information gathering (Credential Hunting).
+    </p>
+    <h3 style="font-size: 16px; color: #f39c12; border-bottom: 2px solid #eeeeee; padding-bottom: 5px; margin-top: 25px;">INCIDENT INFORMATION</h3>
+    <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 20px;">
+      <tr>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eeeeee; width: 35%;"><strong>Alert Type:</strong></td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eeeeee; font-weight: bold; color: #2c3e50;">$exec.alert_type</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eeeeee;"><strong>MITRE Technique:</strong></td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eeeeee; color: #d32f2f;"><b>$exec.matched_mitre.#0</b> ($exec.matched_iocs.#0)</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eeeeee;"><strong>Risk Level:</strong></td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eeeeee; font-weight: bold;">$exec.risk_level <span style="font-weight: normal; color: #666;">(Score: $exec.max_risk_score/100)</span></td>
+      </tr>
+    </table>
+    <h3 style="font-size: 16px; color: #1976d2; border-bottom: 2px solid #eeeeee; padding-bottom: 5px;">EXECUTION DETAILS</h3>
+    <div style="background-color: #f4f7f6; border-left: 4px solid #1976d2; padding: 15px; margin-bottom: 20px; border-radius: 0 4px 4px 0;">
+      <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Host:</strong> <span style="font-family: 'Courier New', Courier, monospace; font-size: 15px; background-color: #e2e8f0; padding: 2px 6px; border-radius: 4px;">$exec.host</span></p>
+      <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>User Account:</strong> <span style="color: #d32f2f; font-weight: bold;">$exec.user</span></p>
+      <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Process:</strong> $exec.process_chain.#0.process</p>
+      <p style="margin: 0; font-size: 14px;"><strong>Command Line:</strong></p>
+      <p style="margin: 5px 0 0 0; background-color: #2d3436; color: #00cec9; padding: 10px; font-family: monospace; border-radius: 4px; word-break: break-all;">$exec.process_chain.#0.cmdline</p>
+    </div>
+    <div style="background-color: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 6px; margin-bottom: 25px;">
+      <h4 style="margin: 0 0 10px 0; font-size: 15px; color: #b71c1c;">RECOMMENDED ACTIONS:</h4>
+      <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #3e2723; line-height: 1.6;">
+        <li>Contact the account owner <b>$exec.user</b> to verify if this is a legitimate administrative action or a compromised account.</li>
+        <li>Check if the output file of this command was exfiltrated.</li>
+      </ul>
+    </div>
+  </div>
+  <div style="background-color: #f8f9fa; padding: 15px; text-align: center; border-top: 1px solid #e0e0e0; border-radius: 0 0 8px 8px;">
+    <p style="margin: 0; font-size: 12px; color: #7f8c8d; font-style: italic;">Automated notification generated by the Shuffle SOAR system</p>
+  </div>
+</div>
+
+```
