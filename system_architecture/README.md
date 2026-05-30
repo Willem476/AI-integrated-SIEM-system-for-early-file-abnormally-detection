@@ -44,7 +44,7 @@ Please navigate to each respective subdirectory and follow the specialized, no-c
 
 ---
 
-###Endpoint Telemetry & Automation Setup (Phases 4 - 5)
+### Endpoint Telemetry & Automation Setup (Phases 4 - 5)
 
 4.  **Phase 4: [📂 `elastic_agent/`](./elastic_agent/)**
     * **Task:** Install Microsoft Sysmon on the Windows Server node and register the Elastic Agent.
