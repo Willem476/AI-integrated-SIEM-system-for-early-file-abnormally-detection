@@ -23,7 +23,7 @@ In this guide, we will register and deploy Fleet Server on our Proxmox host. Bec
 5. Click **Continue**.
 
 ### Step 3: Generate the Service Token & Installation Command
-1. Select the operating system of your Proxmox VM host (e.g., **Linux Tar** or **Debian** package depending on your environment).
+1. Select the operating system of your VM host (e.g., **Linux Tar** or **Debian** package depending on your environment).
 2. Kibana will generate a command block to execute. **Do not copy it directly yet**, as the default command expects an HTTPS connection.
 
 ### Step 4: Execute the Patched Installation Command (No-Cert Adjustment)
