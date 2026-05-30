@@ -24,13 +24,31 @@ Our system operates across four primary layers to ensure a closed-loop defense m
     *   **Enrich:** Query threat intelligence platforms (Cortex, VirusTotal) for additional context.
     *   **Manage:** Generate a comprehensive incident case in TheHive for the security team.
 
-## Deployment Instructions
+## Deployment Instructions & Installation Order
 
-Detailed commands and setup instructions to deploy the Elasticsearch, Kibana, and SOAR containers are located within the `README.md` files of their respective folders. 
+To ensure correct dependency mapping and prevent connection errors, the infrastructure components must be deployed in the exact sequential order listed below. 
 
-Please navigate to each directory to follow the specific installation steps:
-* Navigate to the [**`elasticsearch`**](./elasticsearch/) folder for database setup.
-* Navigate to the [**`kibana`**](./kibana/) folder for dashboard deployment.
-* Navigate to the [**`fleet`**](./fleet/) folder to set up the centralized agent management node (No-SSL instructions included).
-* Navigate to the [**`elastic_agent`**](./elastic_agent/) folder to configure Sysmon and enroll your Windows Server endpoint.
-* Navigate to the [**`SOAR`**](./SOAR/) folder to spin up the automation tools.
+Please navigate to each respective subdirectory and follow the specialized, no-cert step-by-step documentation:
+
+### Core Infrastructure Setup (Phases 1 - 3)
+
+1.  **Phase 1: [📂 `elasticsearch/`](./elasticsearch/)**
+    * **Task:** Deploy the database engine and core data repository.
+    * **Objective:** Setting up this node first is mandatory, as all subsequent services require an active Elasticsearch instance to establish connections and authenticate users.
+2.  **Phase 2: [📂 `kibana/`](./kibana/)**
+    * **Task:** Deploy the central visualization dashboard and configuration interface.
+    * **Objective:** Provides the UI needed to manage the SIEM, interact with security metrics, and generate the mandatory service tokens for the Fleet console.
+3.  **Phase 3: [📂 `fleet/`](./fleet/)**
+    * **Task:** Initialize the centralized agent orchestration server.
+    * **Objective:** Establishes the command node (`https://<YOUR_HOST_IP>:8220`) responsible for pushing integration profiles and security policies out to target endpoints.
+
+---
+
+###Endpoint Telemetry & Automation Setup (Phases 4 - 5)
+
+4.  **Phase 4: [📂 `elastic_agent/`](./elastic_agent/)**
+    * **Task:** Install Microsoft Sysmon on the Windows Server node and register the Elastic Agent.
+    * **Objective:** Deploys local sensors on the machine to audit process and file activities, hooking them directly into the Fleet Server to stream telemetry back into the primary database.
+5.  **Phase 5: [📂 `SOAR/`](./SOAR/)**
+    * **Task:** Spin up the Security Orchestration, Automation, and Response containers.
+    * **Objective:** Connects Shuffle playbooks to the rest of your established infrastructure, locking down the closed-loop defense pipeline for automated endpoint network isolation via pfSense.
