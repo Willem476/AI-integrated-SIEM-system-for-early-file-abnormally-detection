@@ -14,11 +14,13 @@ This workflow utilizes branching logic to determine the appropriate response bas
 After the file path is sanitized in the `String_Modifier` node, the data is evaluated to route to the correct sub-workflow:
 
 * **Route to Command Line Analysis (`Shuffle_Tools_2`):**
-* **Condition:** If `$exec.alert_type` **equals** `command_line_anomaly`
+* **Condition:** If `$exec.alert_type` **equals** `command_line_anomaly`<img width="590" height="698" alt="image" src="https://github.com/user-attachments/assets/538fd641-2764-47a7-abe3-4bb6be892faa" />
+
 
 
 * **Route to Malware Analysis (`VT_Tools`):**
-* **Condition:** If `$exec.alert_type` **does not equal** `command_line_anomaly`
+* **Condition:** If `$exec.alert_type` **does not equal** `command_line_anomaly`<img width="577" height="690" alt="image" src="https://github.com/user-attachments/assets/2a1b12be-0013-48d8-94e9-a249e3797370" />
+
 
 
 
@@ -28,12 +30,14 @@ After the Python script analyzes the hash, the system decides whether to isolate
 
 * **Route to Create Alert Only (`TheHive_1`):**
 * **Condition 1:** If `$exec.risk_level` **does not equal** `CRITICAL`
-* **Condition 2:** If `$exec.risk_level` **does not equal** `HIGH`
+* **Condition 2:** If `$exec.risk_level` **does not equal** `HIGH`<img width="609" height="439" alt="image" src="https://github.com/user-attachments/assets/361cccbc-a165-41ba-81c6-1ee4f1064cb4" />
+
 
 
 * **Route to Automated Containment (`Isolate_Machine`):**
 * **Condition 1:** If `$exec.risk_level` **does not equal** `LOW`
-* **Condition 2:** If `$exec.risk_level` **does not equal** `MEDIUM`
+* **Condition 2:** If `$exec.risk_level` **does not equal** `MEDIUM`<img width="610" height="438" alt="image" src="https://github.com/user-attachments/assets/f4a4f665-8f43-4887-9f8e-23c8c3591dad" />
+
 
 
 
@@ -42,11 +46,13 @@ After the Python script analyzes the hash, the system decides whether to isolate
 After an initial email notification is sent regarding the suspicious command line, the workflow decides the next containment steps.
 
 * **Route to Automated Containment (`Isolate_Machine_copy`):**
-* **Condition:** If `$exec.risk_level` **does not equal** `LOW`
+* **Condition:** If `$exec.risk_level` **does not equal** `LOW`<img width="842" height="540" alt="image" src="https://github.com/user-attachments/assets/23607b27-6e29-4b24-82f5-af7cdd253d5d" />
+
 
 
 * **Route to Create Case Only (`TheHive_6`):**
-* **Condition:** If `$exec.risk_level` **equals** `LOW`
+* **Condition:** If `$exec.risk_level` **equals** `LOW`<img width="845" height="543" alt="image" src="https://github.com/user-attachments/assets/0fe89dc7-f11f-498c-bf8e-aac3d636bc76" />
+
 
 
 
@@ -61,7 +67,8 @@ Below are the exact configurations for every Node in this workflow. Sensitive va
 * **App:** Shuffle Tools
 * **Action:** repeat_back_to_me
 * **Parameters:**
-* `call`: `$exec`
+* `call`: `$exec`<img width="841" height="495" alt="image" src="https://github.com/user-attachments/assets/5a92b005-bb31-44e8-8b98-fad5d79e8cc4" />
+
 
 
 
