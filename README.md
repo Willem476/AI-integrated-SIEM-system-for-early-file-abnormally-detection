@@ -6,7 +6,8 @@ Traditional Security Operations Centers (SOCs) often struggle with alert fatigue
 
 If you want to learn how to combine ELK Stack, SOAR, and Machine Learning into a cohesive defensive pipeline, you are in the right place!
 
-<img width="1460" height="1056" alt="pipeline drawio" src="https://github.com/user-attachments/assets/c26c5f80-5729-4245-8a1a-d5fff1c59952" />
+<img width="1400" height="1210" alt="pipeline drawio" src="https://github.com/user-attachments/assets/116d1029-bdea-471e-8d21-72789428dfbd" />
+
 
 
 ##  What You Will Learn & Build
