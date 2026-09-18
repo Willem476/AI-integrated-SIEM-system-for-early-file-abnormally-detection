@@ -62,6 +62,7 @@ data/
   synthetic_malware_30k_fixed.csv
 data2/
   command_line_AI_10pct_labeled.csv
+  Windows_File_Activity_Dataset.csv
 ```
 
 Both scripts have Elasticsearch host, API key, and the Shuffle webhook URL hardcoded near the top of the file (the `CONFIG` dict) — open the script and fill those in for your own environment before running it.
