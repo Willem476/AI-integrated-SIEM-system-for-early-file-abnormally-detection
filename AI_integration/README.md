@@ -52,17 +52,15 @@ Dataset (Google Drive): https://drive.google.com/drive/folders/1lZFBC8XPqqc89aRZ
 `AI_integration/` has two standalone scripts. Each one trains its own model from a local CSV and then runs realtime detection against Elasticsearch — there's no separate train step, training happens automatically on every run.
 
 - `command_detection_local.py` — flags suspicious command lines, trains on `data2/command_line_AI_10pct_labeled.csv`
-- `malware_detection_local.py` — flags suspicious files, trains on `data/AI Monitoring Logs.csv` and `data/synthetic_malware_30k_fixed.csv`
+- `malware_detection_local.py` — flags suspicious files, trains on `Windows_File_Activity_Dataset.csv`
 
 Download the dataset from the link above and lay it out like this before running anything:
 
 ```
 data/
-  AI Monitoring Logs.csv
-  synthetic_malware_30k_fixed.csv
+  Windows_File_Activity_Dataset.csv
 data2/
   command_line_AI_10pct_labeled.csv
-  Windows_File_Activity_Dataset.csv
 ```
 
 Both scripts have Elasticsearch host, API key, and the Shuffle webhook URL hardcoded near the top of the file (the `CONFIG` dict) — open the script and fill those in for your own environment before running it.
