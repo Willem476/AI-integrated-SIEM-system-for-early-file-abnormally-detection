@@ -58,8 +58,10 @@ Download the dataset from the link above and lay it out like this before running
 
 ```
 data/
+  malware_detection_local.py
   Windows_File_Activity_Dataset.csv
 data2/
+  command_detection_local.py
   command_line_AI_10pct_labeled.csv
 ```
 
