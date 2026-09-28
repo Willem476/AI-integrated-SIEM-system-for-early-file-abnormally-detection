@@ -2,6 +2,10 @@
 
 An extension of the AI-integrated SIEM that covers the network stage of an intrusion. A phishing attachment runs on a Windows endpoint and opens a C2 channel. Suricata on pfSense detects the C2 traffic, the alert lands in Elasticsearch, and an automation script triggers memory acquisition on the endpoint through Velociraptor. The evidence is then analyzed offline with Wireshark and Volatility 3.
 
+![DFIR Pipeline](dfir_pipeline.png)
+
+> **Isolation is mandatory.** Build this only on a host-only network you own and control. Keep the lab off any production or internet-facing segment. Snapshot every VM before running malware samples.
+
 ## Scope
 
 The Suricata alert is treated as detection of the C2 (network) stage only. It is not equivalent to phishing detection. The email, attachment and execution stages are left to endpoint telemetry (Sysmon through Elastic Agent, and Velociraptor).
@@ -23,6 +27,15 @@ The lab runs on two physical machines: one PC hosts pfSense and the lab VMs, and
 The victim, pfSense LAN, Elasticsearch and Velociraptor share the VMnet1 subnet (10.10.12.0/24).
 
 Suricata listens on the LAN interface rather than WAN, so alerts carry the endpoint's real pre-NAT IP address. This lets the alert be correlated directly with the Velociraptor client and with Sysmon events on the endpoint.
+
+### VMware network setup
+
+1. In VMware Workstation, open **Edit > Virtual Network Editor**.
+2. Set **VMnet1** to host-only, subnet `10.10.12.0/24`, with the VMware DHCP service disabled (pfSense and static IPs handle addressing).
+3. Give the pfSense VM two NICs: NIC 1 on **NAT (VMnet8)** for WAN, NIC 2 on **VMnet1** for LAN.
+4. Give every other lab VM a single NIC on **VMnet1**, with gateway and DNS set to `10.10.12.2`.
+
+Reference: [VMware Workstation Pro documentation](https://techdocs.broadcom.com/us/en/vmware-cis/desktop-hypervisors/workstation-pro.html)
 
 ## Detection and response pipeline
 
@@ -61,6 +74,127 @@ Each incident produces:
 | `memory.dmp` (`PhysicalMemory.dd`) | Velociraptor `Windows.Memory.Acquisition` | Volatility 3 |
 | `suspicious_file` | Extracted from memory or disk | Static analysis, hash lookup |
 
+---
+
+# Build guide
+
+Every component below is installed from its official source. Follow the order in [Recommended build order](#recommended-build-order) at the end.
+
+## 1. pfSense CE
+
+1. Download the installer from [pfSense CE download](https://www.pfsense.org/download/) (Netgate Installer, AMD64).
+2. Follow the [Installation Walkthrough](https://docs.netgate.com/pfsense/en/latest/install/install-walkthrough.html). Allocate 2 vCPU, 2 GB RAM, 20 GB disk.
+3. Assign interfaces from the console: WAN on the NAT NIC (DHCP), LAN on the VMnet1 NIC set to `10.10.12.2/24`.
+4. Open the web GUI at `https://10.10.12.2`. Default credentials are `admin` / `pfsense`; change them in the setup wizard.
+5. Confirm **Firewall > NAT > Outbound** is set to automatic so LAN hosts reach the host network through WAN.
+6. On the WAN interface, clear **Block private networks** and **Block bogon networks** (the WAN side is itself a private network here).
+
+References: [Installing and Upgrading](https://docs.netgate.com/pfsense/en/latest/install/index.html), [Download Installation Media](https://docs.netgate.com/pfsense/en/latest/install/download-installer-image.html)
+
+## 2. Suricata on pfSense
+
+1. **System > Package Manager > Available Packages**, install `suricata`.
+2. **Services > Suricata > Global Settings**: enable **ETOpen Emerging Threats** rules, set an update interval, then run **Updates > Update**.
+3. **Services > Suricata > Interfaces**: add the **LAN** interface. Running on LAN (not WAN) is what preserves the endpoint's real pre-NAT IP (10.10.12.20) in each alert.
+4. In the LAN interface settings:
+   - Enable **EVE JSON Log**, **EVE Output Type** = `FILE`.
+   - Log alerts plus HTTP, TLS, and DNS metadata for context.
+5. **LAN Categories**: enable the ET categories you need (at minimum `emerging-malware`, `emerging-trojan`, `emerging-policy`).
+6. Start Suricata on LAN. Alerts are written to `/var/log/suricata/suricata_<LAN_IF><ID>/eve.json`.
+
+> **Encrypted C2:** beacons over HTTPS are encrypted, so signature rules often match only on metadata (JA3/JA4 hashes, TLS SNI, destination, timing). This is consistent with the scope above — Suricata covers the network stage, endpoint telemetry covers delivery and execution.
+
+References: [pfSense Package Manager](https://docs.netgate.com/pfsense/en/latest/packages/manager.html), [Suricata EVE JSON output](https://docs.suricata.io/en/latest/output/eve/eve-json-output.html), [Suricata rule format](https://docs.suricata.io/en/latest/rules/intro.html), [pfELK: Suricata on pfSense](https://github.com/pfelk/pfelk/wiki/How-To:-Suricata-on-pfSense)
+
+## 3. Shipping eve.json to Elasticsearch
+
+This assumes the existing Elasticsearch + Kibana stack at `10.10.12.11`. Filebeat does not run on pfSense's FreeBSD base, so alerts are sent with a shell script and `curl` to the Elasticsearch Bulk API, into the `suricata-eve*` index that the trigger script polls.
+
+1. If Elasticsearch runs with TLS, copy `/etc/elasticsearch/certs/http_ca.crt` from the Elastic VM to `/root/elastic_ca.crt` on pfSense.
+2. Create a dedicated Kibana user (**Stack Management > Users**) with write access to `suricata-eve*`. Do not use `elastic` for ingest.
+3. Deploy a shipper script on pfSense (e.g. `/root/scripts/eve_shipper.sh`) that tails new alert lines, wraps them for the Bulk API, and POSTs them:
+
+   ```sh
+   #!/bin/sh
+   EVE="/var/log/suricata/suricata_<LAN_IF><ID>/eve.json"
+   OFFSET_FILE="/root/scripts/.eve_offset"
+   ES="https://10.10.12.11:9200/suricata-eve/_bulk"
+
+   LAST=$(cat "$OFFSET_FILE" 2>/dev/null || echo 0)
+   TOTAL=$(wc -l < "$EVE" | tr -d ' ')
+   [ "$TOTAL" -lt "$LAST" ] && LAST=0          # log rotated
+
+   tail -n +$((LAST + 1)) "$EVE" | head -n $((TOTAL - LAST)) \
+     | grep '"event_type":"alert"' \
+     | awk '{print "{\"index\":{}}"; print}' > /tmp/eve_bulk.ndjson
+
+   if [ -s /tmp/eve_bulk.ndjson ]; then
+     curl -s --cacert /root/elastic_ca.crt -u "<USER>:<PASSWORD>" \
+       -H "Content-Type: application/x-ndjson" \
+       -X POST "$ES" --data-binary @/tmp/eve_bulk.ndjson > /dev/null
+   fi
+   echo "$TOTAL" > "$OFFSET_FILE"
+   ```
+
+   If your Elasticsearch runs without TLS (the trigger's `base_url` is `http://10.10.12.11:9200`), drop `--cacert` and use the `http://` URL.
+
+4. Schedule it every minute: install the `Cron` package, then add the job under **Services > Cron**.
+5. In Kibana, create a data view for `suricata-eve*` with `timestamp` as the time field.
+
+Reference: [Elasticsearch Bulk API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk)
+
+## 4. Velociraptor server (10.10.12.22)
+
+1. Download the latest `velociraptor-vX.Y.Z-linux-amd64` from [Velociraptor releases](https://github.com/Velocidex/velociraptor/releases).
+2. Generate config and build the server package:
+
+   ```bash
+   chmod +x velociraptor-*-linux-amd64
+   ./velociraptor-*-linux-amd64 config generate -i
+   # Self Signed SSL; public DNS/IP = 10.10.12.22
+   # Frontend (client) port 8000; GUI port 8889; API (gRPC) port 8001
+   ./velociraptor-*-linux-amd64 debian server --config ./server.config.yaml
+   sudo dpkg -i velociraptor_server_*_amd64.deb
+   ```
+
+3. In `/etc/velociraptor/server.config.yaml`, set the `GUI`, `Frontend` and `API` bind addresses to `0.0.0.0` as needed for the lab subnet, then `sudo systemctl restart velociraptor_server`.
+4. Open `https://10.10.12.22:8889`.
+5. Create the API client used by the trigger script (`api.config.yaml`, gRPC on port 8001):
+
+   ```bash
+   sudo -u velociraptor velociraptor --config /etc/velociraptor/server.config.yaml \
+     config api_client --name soar --role administrator,api /etc/velociraptor/api.config.yaml
+   ```
+
+   `api.config.yaml` contains the client private key — do not commit it.
+
+References: [Quickstart Guide](https://docs.velociraptor.app/docs/deployment/quickstart/), [Self-Signed SSL deployment](https://docs.velociraptor.app/docs/deployment/self-signed/), [Server Deployment](https://docs.velociraptor.app/docs/deployment/server/), [Security Configuration](https://docs.velociraptor.app/docs/deployment/security/)
+
+## 5. Windows victim endpoint (10.10.12.20)
+
+1. Static IP `10.10.12.20/24`, gateway and DNS `10.10.12.2`.
+2. **Sysmon** (built-in feature *or* standalone Sysinternals — they cannot coexist):
+   - Built-in (recent Win10/11): `Enable-WindowsOptionalFeature -Online -FeatureName Sysmon`, then `sysmon -i C:\Sysmon\sysmonconfig.xml`
+   - Standalone: download from [Sysinternals Sysmon](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon), then `sysmon64.exe -accepteula -i sysmonconfig.xml`
+   - Config: [olafhartong/sysmon-modular](https://github.com/olafhartong/sysmon-modular) maps events to MITRE ATT&CK techniques (e.g. T1036 Masquerading).
+3. **Velociraptor client:** in the GUI, run the `Server.Utils.CreateMSI` artifact, download the repacked MSI from **Uploaded Files**, install it as Administrator. The client connects to the frontend at `https://10.10.12.22:8000`. Confirm it appears under **Search clients**.
+4. (Optional) forward Sysmon and Windows event logs into Elastic with [Elastic Agent / Winlogbeat](https://www.elastic.co/docs/reference/beats/winlogbeat) so endpoint telemetry sits alongside the Suricata alerts.
+
+References: [Enable and configure Sysmon in Windows](https://learn.microsoft.com/en-us/windows/security/operating-system-security/sysmon/how-to-enable-sysmon), [Velociraptor client deployment](https://docs.velociraptor.app/docs/deployment/clients/)
+
+## 6. Attacker / C2 host (192.168.1.7) — out of scope
+
+The attacker box (Kali running Mythic C2) is what you are **detecting**, so this guide does not reproduce payload build or endpoint-evasion steps. Set it up from the framework's own documentation, on the isolated network only, and only against VMs you own:
+
+- [Mythic C2 official documentation](https://docs.mythic-c2.net/) and [installation guide](https://docs.mythic-c2.net/installation)
+- [Kali Linux installation](https://www.kali.org/docs/installation/)
+
+For the detection lab you only need the C2 endpoint (192.168.1.7, HTTP listener on 443) to write the Suricata rule and confirm the beacon appears in the PCAP and endpoint telemetry.
+
+---
+
+# Automation and analysis
+
 ## Trigger script: suricata_velociraptor.py
 
 ### Requirements
@@ -69,7 +203,7 @@ Each incident produces:
 pip3 install pyvelociraptor grpcio requests pyyaml
 ```
 
-An API client configuration is required from the Velociraptor server:
+An API client configuration is required from the Velociraptor server (see build step 4):
 
 ```bash
 velociraptor --config server.config.yaml config api_client \
@@ -146,6 +280,8 @@ A PCAP does not contain process or file names. It identifies the C2 endpoint thr
 
 ### Memory (Volatility 3)
 
+Install: `pip install volatility3` ([docs](https://volatility3.readthedocs.io/), [repo](https://github.com/volatilityfoundation/volatility3)).
+
 Correlation path: C2 IP and timestamp from the alert or PCAP, then `netscan` for the PID, then `pstree` and `cmdline` for the process name and path, then `dumpfiles` for the binary.
 
 ```bash
@@ -180,3 +316,15 @@ Notes:
 | Execution | T1204.002 Malicious File | Sysmon Event ID 1 |
 | Defense evasion | T1036 Masquerading | Sysmon |
 | Command and control | T1071.001 Web Protocols | Suricata on pfSense |
+
+---
+
+## Recommended build order
+
+1. VMware networks (VMnet1)
+2. pfSense (WAN/LAN, NAT)
+3. Confirm the existing Elasticsearch + Kibana stack (10.10.12.11) is reachable
+4. Suricata + eve.json shipper -> verify alerts land in Kibana (`suricata-eve*`)
+5. Velociraptor server + Windows client + Sysmon
+6. `suricata_velociraptor.py` trigger + tcpdump automation (test with `--test`, then `--dry-run`)
+7. Attacker host, then run one controlled beacon end-to-end and validate every stage
