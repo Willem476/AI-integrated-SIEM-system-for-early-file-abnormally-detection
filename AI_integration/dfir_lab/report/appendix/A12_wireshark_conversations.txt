@@ -1,0 +1,10 @@
+Wireshark > Statistics > Conversations > TCP (E2, traffic.pcap) - top rows
+Address A     Port A  Address B     Port B  Packets  Bytes   Pkts A->B  Bytes A->B  Pkts B->A  Bytes B->A  Rel Start   Duration
+10.10.12.20   50447   192.168.1.7   443     889      161 kB  381        83 kB       508        78 kB       1.284410    379.8882
+10.10.12.11   37222   10.10.12.20   8001    131      15 kB   67         7 kB        64         8 kB        0.000000    367.9454
+10.10.12.1    64575   10.10.12.20   8889    68       36 kB   24         5 kB        44         31 kB       113.467043  15.0328
+10.10.12.20   49678   10.10.12.11   8220    55       6 kB    28         4 kB        27         2 kB        13.838638   362.9943
+10.10.12.20   50457   10.10.12.11   9200    55       62 kB   46         61 kB       9          848 bytes   33.978231   3.1463
+(... remaining 77 conversations: 10.10.12.20 <-> 10.10.12.11:9200 Elastic Agent,
+     10.10.12.1 <-> 10.10.12.20:8889 Velociraptor GUI - lab management traffic)
+Totals: Ethernet 4, IPv4 6, TCP 82, UDP 2

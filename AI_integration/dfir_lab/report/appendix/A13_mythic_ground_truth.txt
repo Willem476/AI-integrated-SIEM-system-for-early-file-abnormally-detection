@@ -1,0 +1,5 @@
+LAB GROUND TRUTH - C2 operator console (not investigative evidence)
+Callbacks 1-9: IP 10.10.12.20 | Host WIN-5OSDUJBR958 | User Administrator | Domain WIN-5OSDUJBR958
+Task (callback C-9, agent apollo, operator mythic_admin): shell ipconfig/all
+Output: Ethernet0 - Intel(R) 82574L, MAC 00-0C-29-8C-6A-95, DHCP No,
+        IPv4 10.10.12.20, Mask 255.255.255.0, Gateway 10.10.12.2, DNS 10.10.12.2

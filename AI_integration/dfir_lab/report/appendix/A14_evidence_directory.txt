@@ -1,0 +1,9 @@
+/root/soc-lab/evidence/INC-20260927-072205/
+Name              Size      Changed (UTC+07:00)       Rights      Owner
+alert.json        1 KB      9/27/2026 2:22:05 PM      rw-r--r--   root
+traffic.pcap      1,702 KB  9/27/2026 2:30:19 PM      rw-r--r--   root
+traffic.pcap.log  1 KB      9/27/2026 2:22:05 PM      rw-r--r--   root
+
+SHA256 (taken on analyst workstation, 2026-09-28):
+alert.json    BD49E274D8DA4133A1EF73A7448079FDEB88C098A155B280D2A9918CBBCF7E89
+traffic.pcap  7FA29AC565E48308D4059391B0D4F46DE552B6FF4971DE41BDD93618E4B90879

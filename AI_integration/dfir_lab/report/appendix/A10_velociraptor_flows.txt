@@ -1,0 +1,24 @@
+Client: WIN-5OSDUJBR958 (C.8f3be93e17030665) - Connected
+
+State  FlowId            Artifact                    Created                    Last Active                Creator               Size
+done   F.DASC87A9HHH5K   Windows.Memory.Acquisition  2026-09-27T07:22:05.041Z   2026-09-27T07:23:37.546Z   nguyen                5120 Mb
+done   F.DASBKCL6L74KI   Windows.Memory.Acquisition  2026-09-27T06:39:46.203Z   2026-09-27T06:41:41.703Z   nguyen                5120 Mb
+done   F.DAP2N54H5TU9G   Windows.System.PowerShell   2026-09-22T07:17:40.332Z   2026-09-22T07:17:40.853Z   nguyen                7 Kb
+done   F.DAP025N7KJ4JU   Generic.Client.Info         2026-09-22T04:16:22.315Z   2026-09-22T04:16:23.879Z   InterrogationService  0 b
+
+Flow F.DASBKCL6L74KI (analysed image):
+  Create Time      2026-09-27T06:39:46.203Z
+  Start Time       2026-09-27T06:39:46.244Z
+  Last Active      2026-09-27T06:41:41.703Z
+  Duration         115.46 seconds
+  State            Completed
+  Timeout          600 seconds
+  Uploaded Bytes   5368709120 / 5368709120
+  Files uploaded   1
+  Download         WIN-5OSDUJBR958-C.8f3be93e17030665-F.DASBKCL6L74KI
+    Uncompressed   5120 Mb
+    Compressed     1415 Mb
+    Container files 8
+    Started        2026-09-27T06:41:47Z
+    Duration (s)   90
+    SHA256         d9d669078ee6df53f287d2dcac100556516a65b75111ca7ab6c8579be48e432c

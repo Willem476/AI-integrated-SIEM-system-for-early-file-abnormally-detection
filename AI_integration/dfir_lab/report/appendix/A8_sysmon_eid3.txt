@@ -1,0 +1,23 @@
+Log Name:      Microsoft-Windows-Sysmon/Operational
+Source:        Sysmon
+Event ID:      3
+Task Category: Network connection detected (rule: NetworkConnect)
+Computer:      WIN-5OSDUJBR958
+Logged:        27/09/2026 1:17:32 PM (UTC+07:00)
+Filter:        Event ID 3 -> 1,068 events in log
+
+Network connection detected:
+RuleName: technique_id=T1036,technique_name=Masquerading
+UtcTime: 2026-09-27 06:17:31.247
+ProcessGuid: {388cdff0-b4fa-6ab8-dd00-000000000d00}
+ProcessId: 832
+Image: C:\Users\Administrator\Desktop\a3.exe
+User: WIN-5OSDUJBR958\Administrator
+Protocol: tcp
+Initiated: true
+SourceIsIpv6: false
+SourceIp: 10.10.12.20
+SourcePort: 49967
+DestinationIsIpv6: false
+DestinationIp: 192.168.1.7
+DestinationPort: 443
