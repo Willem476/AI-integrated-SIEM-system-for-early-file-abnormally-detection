@@ -4,8 +4,6 @@ An extension of the AI-integrated SIEM that covers the network stage of an intru
 
 ![DFIR Pipeline](dfir_pipeline.png)
 
-> **Isolation is mandatory.** Build this only on a host-only network you own and control. Keep the lab off any production or internet-facing segment. Snapshot every VM before running malware samples.
-
 ## Scope
 
 The Suricata alert is treated as detection of the C2 (network) stage only. It is not equivalent to phishing detection. The email, attachment and execution stages are left to endpoint telemetry (Sysmon through Elastic Agent, and Velociraptor).
