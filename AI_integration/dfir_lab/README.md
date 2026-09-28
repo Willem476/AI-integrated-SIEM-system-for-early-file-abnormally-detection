@@ -13,7 +13,7 @@ The lab runs on two physical machines: one PC hosts pfSense and the lab VMs, and
 | Component | Address | Role |
 |---|---|---|
 | pfSense (LAN) | 10.10.12.2 | Firewall, Suricata IDS on the LAN interface |
-| pfSense (WAN) | 192.168.166.131 | Upstream interface |
+| pfSense (WAN) | 192.168.1.7 | Upstream interface |
 | pfSense (OPT1 / OPT2) | 10.10.13.2 / 10.10.14.2 | Additional lab segments |
 | Windows VM | 10.10.12.20 | Victim endpoint, Sysmon, Velociraptor client |
 | Ubuntu VM | 10.10.12.11 | Elasticsearch / Kibana |
