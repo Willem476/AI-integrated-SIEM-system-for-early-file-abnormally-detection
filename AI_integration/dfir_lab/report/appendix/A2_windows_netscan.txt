@@ -1,0 +1,134 @@
+PS C:\Users\PC\Documents\Voltality_analysting\uploads\auto> vol -f .\PhysicalMemory.dd windows.netscan
+Volatility 3 Framework 2.28.0
+Progress:  100.00               PDB scanning finished
+Offset  Proto   LocalAddr       LocalPort       ForeignAddr     ForeignPort     State   PID     Owner   Created
+
+0x9e8a6a164b20  TCPv4   10.10.12.20     49803   4.213.25.240    443     ESTABLISHED     3064    svchost.exe     2026-09-27 06:02:20.000000 UTC
+0x9e8a6a644010  TCPv4   10.10.12.20     8889    10.10.12.1      59364   CLOSED  6944    velociraptor.e  2026-09-27 06:40:00.000000 UTC
+0x9e8a6a644460  TCPv4   10.10.12.20     49703   169.254.169.254 80      CLOSED  5664    elastic-otel-c  2026-09-27 05:59:25.000000 UTC
+0x9e8a6a654010  TCPv4   10.10.12.20     8889    10.10.12.1      49248   CLOSED  6944    velociraptor.e  2026-09-27 06:40:21.000000 UTC
+0x9e8a6a664270  TCPv4   10.10.12.20     50134   10.10.12.11     9200    ESTABLISHED     5664    elastic-otel-c  2026-09-27 06:39:36.000000 UTC
+0x9e8a6daf3050  TCPv4   0.0.0.0 135     0.0.0.0 0       LISTENING       964     svchost.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf3050  TCPv6   ::      135     ::      0       LISTENING       964     svchost.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf3590  TCPv4   0.0.0.0 49665   0.0.0.0 0       LISTENING       1288    svchost.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf3ad0  TCPv4   0.0.0.0 135     0.0.0.0 0       LISTENING       964     svchost.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf4010  TCPv4   0.0.0.0 49665   0.0.0.0 0       LISTENING       1288    svchost.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf4010  TCPv6   ::      49665   ::      0       LISTENING       1288    svchost.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf42b0  TCPv4   0.0.0.0 49666   0.0.0.0 0       LISTENING       1748    svchost.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf4550  TCPv4   0.0.0.0 49664   0.0.0.0 0       LISTENING       720     wininit.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf4550  TCPv6   ::      49664   ::      0       LISTENING       720     wininit.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf46a0  TCPv4   0.0.0.0 49666   0.0.0.0 0       LISTENING       1748    svchost.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf46a0  TCPv6   ::      49666   ::      0       LISTENING       1748    svchost.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6daf4be0  TCPv4   0.0.0.0 49664   0.0.0.0 0       LISTENING       720     wininit.exe     2026-09-27 05:59:19.000000 UTC
+0x9e8a6dc66920  TCPv4   127.0.0.1       49679   127.0.0.1       49741   ESTABLISHED     5664    elastic-otel-c  2026-09-27 05:59:26.000000 UTC
+0x9e8a6f4c6bb0  TCPv4   10.10.12.20     50142   10.10.12.11     9200    ESTABLISHED     5664    elastic-otel-c  2026-09-27 06:40:45.000000 UTC
+0x9e8a6f6a5b80  TCPv4   10.10.12.20     8889    10.10.12.1      52225   CLOSED  6944    velociraptor.e  2026-09-27 06:40:00.000000 UTC
+0x9e8a6f6f66e0  TCPv4   0.0.0.0 49667   0.0.0.0 0       LISTENING       2736    spoolsv.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f6830  TCPv4   0.0.0.0 49667   0.0.0.0 0       LISTENING       2736    spoolsv.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f6830  TCPv6   ::      49667   ::      0       LISTENING       2736    spoolsv.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f72b0  TCPv4   0.0.0.0 49668   0.0.0.0 0       LISTENING       864     services.exe    2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f72b0  TCPv6   ::      49668   ::      0       LISTENING       864     services.exe    2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f77f0  TCPv4   0.0.0.0 49668   0.0.0.0 0       LISTENING       864     services.exe    2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f7a90  TCPv4   10.10.12.20     139     0.0.0.0 0       LISTENING       4       System  2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f7be0  TCPv4   0.0.0.0 445     0.0.0.0 0       LISTENING       4       System  2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f7be0  TCPv6   ::      445     ::      0       LISTENING       4       System  2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f7d30  TCPv4   0.0.0.0 47001   0.0.0.0 0       LISTENING       4       System  2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f7d30  TCPv6   ::      47001   ::      0       LISTENING       4       System  2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f7e80  TCPv4   0.0.0.0 5985    0.0.0.0 0       LISTENING       4       System  2026-09-27 05:59:20.000000 UTC
+0x9e8a6f6f7e80  TCPv6   ::      5985    ::      0       LISTENING       4       System  2026-09-27 05:59:20.000000 UTC
+0x9e8a6f8cfba0  TCPv4   10.10.12.20     50141   10.10.12.11     9200    CLOSED  5664    elastic-otel-c  2026-09-27 06:40:37.000000 UTC
+0x9e8a6f978cb0  UDPv4   0.0.0.0 0       *       0               6236    a3.exe  2026-09-27 06:33:09.000000 UTC
+0x9e8a6f9796c0  UDPv4   0.0.0.0 0       *       0               6236    a3.exe  2026-09-27 06:33:09.000000 UTC
+0x9e8a6f9796c0  UDPv6   ::      0       *       0               6236    a3.exe  2026-09-27 06:33:09.000000 UTC
+0x9e8a6f97a0d0  UDPv4   0.0.0.0 0       *       0               6236    a3.exe  2026-09-27 06:33:09.000000 UTC
+0x9e8a6f97a690  UDPv4   0.0.0.0 0       *       0               6236    a3.exe  2026-09-27 06:33:09.000000 UTC
+0x9e8a6f97a690  UDPv6   ::      0       *       0               6236    a3.exe  2026-09-27 06:33:09.000000 UTC
+0x9e8a6f983650  UDPv4   0.0.0.0 0       *       0               3040    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6f98c4a0  UDPv4   0.0.0.0 0       *       0               3040    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6f98c4a0  UDPv6   ::      0       *       0               3040    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb200a0  UDPv4   0.0.0.0 0       *       0               2916    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb200a0  UDPv6   ::      0       *       0               2916    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb20940  UDPv4   0.0.0.0 0       *       0               2916    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb21bf0  UDPv4   0.0.0.0 0       *       0               2916    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb22040  UDPv4   0.0.0.0 0       *       0               2916    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb22490  UDPv4   0.0.0.0 0       *       0               2916    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb22490  UDPv6   ::      0       *       0               2916    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb24430  UDPv4   0.0.0.0 0       *       0               2916    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb24430  UDPv6   ::      0       *       0               2916    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb256e0  UDPv4   0.0.0.0 0       *       0               1904    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb256e0  UDPv6   ::      0       *       0               1904    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb26260  UDPv4   0.0.0.0 0       *       0               1904    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb26c70  UDPv4   0.0.0.0 0       *       0               4       System  2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb28aa0  UDPv4   0.0.0.0 0       *       0               3040    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb28aa0  UDPv6   ::      0       *       0               3040    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb2abb0  UDPv4   0.0.0.0 0       *       0               4       System  2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb2ba10  UDPv4   0.0.0.0 0       *       0               3040    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb307b0  UDPv4   0.0.0.0 0       *       0               1904    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb342a0  UDPv4   0.0.0.0 0       *       0               3548    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb34410  UDPv4   0.0.0.0 0       *       0               3608    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb363b0  UDPv4   0.0.0.0 0       *       0               3548    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fb363b0  UDPv6   ::      0       *       0               3548    svchost.exe     2026-09-27 05:59:20.000000 UTC
+0x9e8a6fdf7d70  TCPv4   0.0.0.0 5357    0.0.0.0 0       LISTENING       4       System  2026-09-27 05:59:21.000000 UTC
+0x9e8a6fdf7d70  TCPv6   ::      5357    ::      0       LISTENING       4       System  2026-09-27 05:59:21.000000 UTC
+0x9e8a6fdf7ec0  TCPv4   127.0.0.1       6791    0.0.0.0 0       LISTENING       3168    elastic-agent.  2026-09-27 05:59:22.000000 UTC
+0x9e8a6fdf8be0  TCPv4   127.0.0.1       6789    0.0.0.0 0       LISTENING       3168    elastic-agent.  2026-09-27 05:59:22.000000 UTC
+0x9e8a70041b30  TCPv4   10.10.12.20     8000    10.10.12.20     49867   ESTABLISHED     6944    velociraptor.e  2026-09-27 06:05:40.000000 UTC
+0x9e8a700648b0  TCPv4   127.0.0.1       8001    127.0.0.1       49853   ESTABLISHED     6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0x9e8a704e58a0  TCPv4   10.10.12.20     49675   191.101.45.59   8041    ESTABLISHED     2856    ScreenConnect.  2026-09-27 05:59:22.000000 UTC
+0x9e8a704e88a0  TCPv4   10.10.12.20     49678   10.10.12.11     8220    ESTABLISHED     3168    elastic-agent.  2026-09-27 05:59:22.000000 UTC
+0x9e8a70516460  TCPv4   127.0.0.1       49770   127.0.0.1       6791    ESTABLISHED     5664    elastic-otel-c  2026-09-27 05:59:32.000000 UTC
+0x9e8a705592a0  UDPv4   0.0.0.0 0       *       0               5104    svchost.exe     2026-09-27 05:59:21.000000 UTC
+0x9e8a7055ab10  UDPv4   0.0.0.0 0       *       0               5104    svchost.exe     2026-09-27 05:59:21.000000 UTC
+0x9e8a7055adf0  UDPv4   0.0.0.0 0       *       0               5104    svchost.exe     2026-09-27 05:59:21.000000 UTC
+0x9e8a7055adf0  UDPv6   ::      0       *       0               5104    svchost.exe     2026-09-27 05:59:21.000000 UTC
+0x9e8a7055b0d0  UDPv4   0.0.0.0 0       *       0               5104    svchost.exe     2026-09-27 05:59:21.000000 UTC
+0x9e8a7055b0d0  UDPv6   ::      0       *       0               5104    svchost.exe     2026-09-27 05:59:21.000000 UTC
+0x9e8a7055b3b0  UDPv4   0.0.0.0 0       *       0               5104    svchost.exe     2026-09-27 05:59:21.000000 UTC
+0x9e8a7055b3b0  UDPv6   ::      0       *       0               5104    svchost.exe     2026-09-27 05:59:21.000000 UTC
+0x9e8a7055b690  UDPv4   0.0.0.0 0       *       0               5104    svchost.exe     2026-09-27 05:59:21.000000 UTC
+0x9e8a70599270  TCPv4   10.10.12.20     49867   10.10.12.20     8000    ESTABLISHED     3176    Velociraptor.e  2026-09-27 06:05:40.000000 UTC
+0x9e8a707f5050  TCPv4   0.0.0.0 49767   0.0.0.0 0       LISTENING       900     lsass.exe       2026-09-27 05:59:28.000000 UTC
+0x9e8a707f52f0  TCPv4   127.0.0.1       49679   0.0.0.0 0       LISTENING       5664    elastic-otel-c  2026-09-27 05:59:26.000000 UTC
+0x9e8a707f5590  TCPv4   127.0.0.1       49687   0.0.0.0 0       LISTENING       5664    elastic-otel-c  2026-09-27 05:59:25.000000 UTC
+0x9e8a707f5d70  TCPv4   0.0.0.0 8889    0.0.0.0 0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0x9e8a707f5d70  TCPv6   ::      8889    ::      0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0x9e8a707f6160  TCPv4   0.0.0.0 49767   0.0.0.0 0       LISTENING       900     lsass.exe       2026-09-27 05:59:28.000000 UTC
+0x9e8a707f6160  TCPv6   ::      49767   ::      0       LISTENING       900     lsass.exe       2026-09-27 05:59:28.000000 UTC
+0x9e8a707f6400  TCPv4   0.0.0.0 8001    0.0.0.0 0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0x9e8a707f6400  TCPv6   ::      8001    ::      0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0x9e8a707f67f0  TCPv4   127.0.0.1       8003    0.0.0.0 0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0x9e8a707f6be0  TCPv4   0.0.0.0 8000    0.0.0.0 0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0x9e8a707f6be0  TCPv6   ::      8000    ::      0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0x9e8a70b0fb80  TCPv4   10.10.12.20     49869   10.10.12.20     8000    ESTABLISHED     3176    Velociraptor.e  2026-09-27 06:05:46.000000 UTC
+0x9e8a70b268a0  TCPv4   127.0.0.1       49853   127.0.0.1       8001    ESTABLISHED     6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0x9e8a70b2e010  TCPv4   10.10.12.20     49764   169.254.169.254 80      CLOSED  5664    elastic-otel-c  2026-09-27 05:59:28.000000 UTC
+0x9e8a70ba6460  TCPv4   10.10.12.20     49694   169.254.169.254 80      CLOSED  5664    elastic-otel-c  2026-09-27 05:59:25.000000 UTC
+0x9e8a70ba8010  TCPv4   127.0.0.1       6791    127.0.0.1       49770   ESTABLISHED     3168    elastic-agent.  2026-09-27 05:59:32.000000 UTC
+0x9e8a70bc3010  TCPv4   10.10.12.20     49747   169.254.169.254 80      CLOSED  5664    elastic-otel-c  2026-09-27 05:59:26.000000 UTC
+0x9e8a70becba0  TCPv4   10.10.12.20     8889    10.10.12.1      50160   CLOSED  6944    velociraptor.e  2026-09-27 06:38:58.000000 UTC
+0x9e8a70c7e460  TCPv4   10.10.12.20     49732   169.254.169.254 80      CLOSED  5664    elastic-otel-c  2026-09-27 05:59:25.000000 UTC
+0x9e8a70c82460  TCPv4   127.0.0.1       49741   127.0.0.1       49679   ESTABLISHED     3168    elastic-agent.  2026-09-27 05:59:26.000000 UTC
+0x9e8a70d3eb40  TCPv4   10.10.12.20     50083   192.168.1.7     443     ESTABLISHED     6236    a3.exe  2026-09-27 06:33:09.000000 UTC
+0x9e8a70e7d920  TCPv4   10.10.12.20     8000    10.10.12.20     49869   ESTABLISHED     6944    velociraptor.e  2026-09-27 06:05:46.000000 UTC
+0x9e8a72b9d920  TCPv4   10.10.12.20     49840   150.171.28.10   443     CLOSED  -       -       2026-09-27 06:04:17.000000 UTC
+0x9e8a72b9e920  TCPv4   10.10.12.20     49841   150.171.28.10   443     CLOSED  -       -       2026-09-27 06:04:18.000000 UTC
+0x9e8a73e35ba0  TCPv4   10.10.12.20     8889    10.10.12.1      54534   CLOSED  6944    velociraptor.e  2026-09-27 06:40:21.000000 UTC
+0xc480001bdd70  TCPv4   0.0.0.0 5357    0.0.0.0 0       LISTENING       4       System  2026-09-27 05:59:21.000000 UTC
+0xc480001bdd70  TCPv6   ::      5357    ::      0       LISTENING       4       System  2026-09-27 05:59:21.000000 UTC
+0xc480001bdec0  TCPv4   127.0.0.1       6791    0.0.0.0 0       LISTENING       3168    elastic-agent.  2026-09-27 05:59:22.000000 UTC
+0xc480001bebe0  TCPv4   127.0.0.1       6789    0.0.0.0 0       LISTENING       3168    elastic-agent.  2026-09-27 05:59:22.000000 UTC
+0xf8065d7e0460  TCPv4   10.10.12.20     49732   169.254.169.254 80      CLOSED  5664    elastic-otel-c  2026-09-27 05:59:25.000000 UTC
+0xf8065d7e4460  TCPv4   127.0.0.1       49741   127.0.0.1       49679   ESTABLISHED     3168    elastic-agent.  2026-09-27 05:59:26.000000 UTC
+0xf8065d866050  TCPv4   0.0.0.0 49767   0.0.0.0 0       LISTENING       900     lsass.exe       2026-09-27 05:59:28.000000 UTC
+0xf8065d8662f0  TCPv4   127.0.0.1       49679   0.0.0.0 0       LISTENING       5664    elastic-otel-c  2026-09-27 05:59:26.000000 UTC
+0xf8065d866590  TCPv4   127.0.0.1       49687   0.0.0.0 0       LISTENING       5664    elastic-otel-c  2026-09-27 05:59:25.000000 UTC
+0xf8065d866d70  TCPv4   0.0.0.0 8889    0.0.0.0 0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0xf8065d866d70  TCPv6   ::      8889    ::      0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0xf8065d867160  TCPv4   0.0.0.0 49767   0.0.0.0 0       LISTENING       900     lsass.exe       2026-09-27 05:59:28.000000 UTC
+0xf8065d867160  TCPv6   ::      49767   ::      0       LISTENING       900     lsass.exe       2026-09-27 05:59:28.000000 UTC
+0xf8065d867400  TCPv4   0.0.0.0 8001    0.0.0.0 0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0xf8065d867400  TCPv6   ::      8001    ::      0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0xf8065d8677f0  TCPv4   127.0.0.1       8003    0.0.0.0 0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0xf8065d867be0  TCPv4   0.0.0.0 8000    0.0.0.0 0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0xf8065d867be0  TCPv6   ::      8000    ::      0       LISTENING       6944    velociraptor.e  2026-09-27 06:04:49.000000 UTC
+0xf8065d901ba0  TCPv4   10.10.12.20     8889    10.10.12.1      50160   CLOSED  6944    velociraptor.e  2026-09-27 06:38:58.000000 UTC

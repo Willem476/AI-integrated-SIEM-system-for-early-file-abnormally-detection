@@ -1,0 +1,233 @@
+{
+  "@timestamp": [
+    "2026-09-29T07:54:20.416Z"
+  ],
+  "agent.ephemeral_id": [
+    "1be6ad6e-6c73-44df-bcec-251c2658cdf7"
+  ],
+  "agent.id": [
+    "1e7ea189-cd12-4870-b8f4-2f1102bc27c8"
+  ],
+  "agent.name": [
+    "WIN-5OSDUJBR958"
+  ],
+  "agent.type": [
+    "filebeat"
+  ],
+  "agent.version": [
+    "9.5.4"
+  ],
+  "data_stream.dataset": [
+    "winlog.winlog"
+  ],
+  "data_stream.namespace": [
+    "default"
+  ],
+  "data_stream.type": [
+    "logs"
+  ],
+  "ecs.version": [
+    "8.0.0"
+  ],
+  "elastic_agent.id": [
+    "1e7ea189-cd12-4870-b8f4-2f1102bc27c8"
+  ],
+  "elastic_agent.snapshot": [
+    false
+  ],
+  "elastic_agent.version": [
+    "9.5.4+build202609161310"
+  ],
+  "event.action": [
+    "Process Create (rule: ProcessCreate)"
+  ],
+  "event.agent_id_status": [
+    "verified"
+  ],
+  "event.code": [
+    "1"
+  ],
+  "event.created": [
+    "2026-09-29T07:54:21.510Z"
+  ],
+  "event.dataset": [
+    "winlog.winlog"
+  ],
+  "event.ingested": [
+    "2026-09-29T07:54:23.000Z"
+  ],
+  "event.kind": [
+    "event"
+  ],
+  "event.provider": [
+    "Microsoft-Windows-Sysmon"
+  ],
+  "host.architecture": [
+    "x86_64"
+  ],
+  "host.hostname": [
+    "WIN-5OSDUJBR958"
+  ],
+  "host.id": [
+    "388cdff0-c84b-4aa6-b136-56b2623720db"
+  ],
+  "host.ip": [
+    "10.10.12.20"
+  ],
+  "host.mac": [
+    "00-0C-29-8C-6A-95"
+  ],
+  "host.name": [
+    "win-5osdujbr958"
+  ],
+  "host.os.build": [
+    "17763.3650"
+  ],
+  "host.os.family": [
+    "windows"
+  ],
+  "host.os.kernel": [
+    "10.0.17763.3650 (WinBuild.160101.0800)"
+  ],
+  "host.os.name": [
+    "Windows Server 2019 Datacenter Evaluation"
+  ],
+  "host.os.name.text": [
+    "Windows Server 2019 Datacenter Evaluation"
+  ],
+  "host.os.platform": [
+    "windows"
+  ],
+  "host.os.type": [
+    "windows"
+  ],
+  "host.os.version": [
+    "10.0"
+  ],
+  "input.type": [
+    "winlog"
+  ],
+  "log.level": [
+    "information"
+  ],
+  "message": [
+    "Process Create:\nRuleName: technique_id=T1059.003,technique_name=Windows Command Shell\nUtcTime: 2026-09-29 07:54:20.409\nProcessGuid: {388CDFF0-6EAC-6ABB-2201-000000001000}\nProcessId: 1708\nImage: C:\\Windows\\System32\\cmd.exe\nFileVersion: 10.0.17763.1697 (WinBuild.160101.0800)\nDescription: Windows Command Processor\nProduct: Microsoft® Windows® Operating System\nCompany: Microsoft Corporation\nOriginalFileName: Cmd.Exe\nCommandLine: cmd.exe /S /c ipconfig/all\nCurrentDirectory: C:\\Users\\Administrator\\Desktop\\\nUser: WIN-5OSDUJBR958\\Administrator\nLogonGuid: {388CDFF0-6B40-6ABB-BC6A-0A0000000000}\nLogonId: 0xa6abc\nTerminalSessionId: 1\nIntegrityLevel: High\nHashes: SHA1=DED8FD7F36417F66EB6ADA10E0C0D7C0022986E9,MD5=911D039E71583A07320B32BDE22F8E22,SHA256=BC866CFCDDA37E24DC2634DC282C7A0E6F55209DA17A8FA105B07414C0E7C527,IMPHASH=272245E2988E1E430500B852C4FB5E18\nParentProcessGuid: {388CDFF0-6DB5-6ABB-E800-000000001000}\nParentProcessId: 8024\nParentImage: C:\\Users\\Administrator\\Desktop\\a3.exe\nParentCommandLine: \"C:\\Users\\Administrator\\Desktop\\a3.exe\" \nParentUser: WIN-5OSDUJBR958\\Administrator"
+  ],
+  "winlog.channel": [
+    "Microsoft-Windows-Sysmon/Operational"
+  ],
+  "winlog.computer_name": [
+    "WIN-5OSDUJBR958"
+  ],
+  "winlog.event_data.CommandLine": [
+    "cmd.exe /S /c ipconfig/all"
+  ],
+  "winlog.event_data.Company": [
+    "Microsoft Corporation"
+  ],
+  "winlog.event_data.CurrentDirectory": [
+    "C:\\Users\\Administrator\\Desktop\\"
+  ],
+  "winlog.event_data.Description": [
+    "Windows Command Processor"
+  ],
+  "winlog.event_data.FileVersion": [
+    "10.0.17763.1697 (WinBuild.160101.0800)"
+  ],
+  "winlog.event_data.Hashes": [
+    "SHA1=DED8FD7F36417F66EB6ADA10E0C0D7C0022986E9,MD5=911D039E71583A07320B32BDE22F8E22,SHA256=BC866CFCDDA37E24DC2634DC282C7A0E6F55209DA17A8FA105B07414C0E7C527,IMPHASH=272245E2988E1E430500B852C4FB5E18"
+  ],
+  "winlog.event_data.Image": [
+    "C:\\Windows\\System32\\cmd.exe"
+  ],
+  "winlog.event_data.IntegrityLevel": [
+    "High"
+  ],
+  "winlog.event_data.LogonGuid": [
+    "{388CDFF0-6B40-6ABB-BC6A-0A0000000000}"
+  ],
+  "winlog.event_data.LogonId": [
+    "0xa6abc"
+  ],
+  "winlog.event_data.OriginalFileName": [
+    "Cmd.Exe"
+  ],
+  "winlog.event_data.ParentCommandLine": [
+    "\"C:\\Users\\Administrator\\Desktop\\a3.exe\" "
+  ],
+  "winlog.event_data.ParentImage": [
+    "C:\\Users\\Administrator\\Desktop\\a3.exe"
+  ],
+  "winlog.event_data.ParentProcessGuid": [
+    "{388CDFF0-6DB5-6ABB-E800-000000001000}"
+  ],
+  "winlog.event_data.ParentProcessId": [
+    "8024"
+  ],
+  "winlog.event_data.ParentUser": [
+    "WIN-5OSDUJBR958\\Administrator"
+  ],
+  "winlog.event_data.ProcessGuid": [
+    "{388CDFF0-6EAC-6ABB-2201-000000001000}"
+  ],
+  "winlog.event_data.ProcessId": [
+    "1708"
+  ],
+  "winlog.event_data.Product": [
+    "Microsoft® Windows® Operating System"
+  ],
+  "winlog.event_data.RuleName": [
+    "technique_id=T1059.003,technique_name=Windows Command Shell"
+  ],
+  "winlog.event_data.TerminalSessionId": [
+    "1"
+  ],
+  "winlog.event_data.User": [
+    "WIN-5OSDUJBR958\\Administrator"
+  ],
+  "winlog.event_data.UtcTime": [
+    "2026-09-29 07:54:20.409"
+  ],
+  "winlog.event_id": [
+    "1"
+  ],
+  "winlog.opcode": [
+    "Info"
+  ],
+  "winlog.process.pid": [
+    3016
+  ],
+  "winlog.process.thread.id": [
+    4932
+  ],
+  "winlog.provider_guid": [
+    "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"
+  ],
+  "winlog.provider_name": [
+    "Microsoft-Windows-Sysmon"
+  ],
+  "winlog.record_id": [
+    "30784"
+  ],
+  "winlog.task": [
+    "Process Create (rule: ProcessCreate)"
+  ],
+  "winlog.user.domain": [
+    "NT AUTHORITY"
+  ],
+  "winlog.user.identifier": [
+    "S-1-5-18"
+  ],
+  "winlog.user.name": [
+    "SYSTEM"
+  ],
+  "winlog.user.type": [
+    "User"
+  ],
+  "winlog.version": [
+    5
+  ],
+  "_id": "AaDsKO-q7muFHSVdlrsB",
+  "_index": ".ds-logs-winlog.winlog-default-2026.09.19-000001",
+  "_score": null
+}

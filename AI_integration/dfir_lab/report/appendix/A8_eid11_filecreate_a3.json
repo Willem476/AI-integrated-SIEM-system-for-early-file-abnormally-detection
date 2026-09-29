@@ -1,0 +1,350 @@
+{
+  "_index": ".ds-logs-windows.sysmon_operational-default-2026.09.19-000001",
+  "_id": "AaDsI--q7muFHSWAjDIo",
+  "_version": 1,
+  "_source": {
+    "agent": {
+      "name": "WIN-5OSDUJBR958",
+      "id": "1e7ea189-cd12-4870-b8f4-2f1102bc27c8",
+      "type": "filebeat",
+      "ephemeral_id": "1be6ad6e-6c73-44df-bcec-251c2658cdf7",
+      "version": "9.5.4"
+    },
+    "process": {
+      "name": "WinRAR.exe",
+      "pid": 7564,
+      "entity_id": "{388CDFF0-6D69-6ABB-DC00-000000001000}",
+      "executable": "C:\\Program Files\\WinRAR\\WinRAR.exe"
+    },
+    "winlog": {
+      "record_id": "30521",
+      "computer_name": "WIN-5OSDUJBR958",
+      "process": {
+        "pid": 3016,
+        "thread": {
+          "id": 4932
+        }
+      },
+      "event_id": "11",
+      "task": "File created (rule: FileCreate)",
+      "provider_guid": "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}",
+      "channel": "Microsoft-Windows-Sysmon/Operational",
+      "event_data": {
+        "CreationUtcTime": "2026-09-29 07:48:58.287"
+      },
+      "opcode": "Info",
+      "provider_name": "Microsoft-Windows-Sysmon",
+      "user": {
+        "identifier": "S-1-5-18",
+        "domain": "NT AUTHORITY",
+        "name": "SYSTEM",
+        "type": "User"
+      },
+      "version": 2
+    },
+    "log": {
+      "level": "information"
+    },
+    "elastic_agent": {
+      "id": "1e7ea189-cd12-4870-b8f4-2f1102bc27c8",
+      "version": "9.5.4+build202609161310",
+      "snapshot": false
+    },
+    "message": "File created:\nRuleName: -\nUtcTime: 2026-09-29 07:48:58.287\nProcessGuid: {388CDFF0-6D69-6ABB-DC00-000000001000}\nProcessId: 7564\nImage: C:\\Program Files\\WinRAR\\WinRAR.exe\nTargetFilename: C:\\Users\\Administrator\\Desktop\\a3.exe\nCreationUtcTime: 2026-09-29 07:48:58.287\nUser: WIN-5OSDUJBR958\\Administrator",
+    "input": {
+      "type": "winlog"
+    },
+    "@timestamp": "2026-09-29T07:48:58.287Z",
+    "file": {
+      "path": "C:\\Users\\Administrator\\Desktop\\a3.exe",
+      "extension": "exe",
+      "name": "a3.exe",
+      "directory": "C:\\Users\\Administrator\\Desktop"
+    },
+    "ecs": {
+      "version": "8.17.0"
+    },
+    "related": {
+      "user": [
+        "Administrator"
+      ]
+    },
+    "data_stream": {
+      "namespace": "default",
+      "type": "logs",
+      "dataset": "windows.sysmon_operational"
+    },
+    "host": {
+      "hostname": "WIN-5OSDUJBR958",
+      "os": {
+        "build": "17763.3650",
+        "kernel": "10.0.17763.3650 (WinBuild.160101.0800)",
+        "name": "Windows Server 2019 Datacenter Evaluation",
+        "type": "windows",
+        "family": "windows",
+        "version": "10.0",
+        "platform": "windows"
+      },
+      "ip": [
+        "10.10.12.20"
+      ],
+      "name": "win-5osdujbr958",
+      "id": "388cdff0-c84b-4aa6-b136-56b2623720db",
+      "mac": [
+        "00-0C-29-8C-6A-95"
+      ],
+      "architecture": "x86_64"
+    },
+    "event": {
+      "agent_id_status": "verified",
+      "ingested": "2026-09-29T07:49:04Z",
+      "code": "11",
+      "provider": "Microsoft-Windows-Sysmon",
+      "created": "2026-09-29T07:48:59.747Z",
+      "kind": "event",
+      "action": "FileCreate",
+      "category": [
+        "file"
+      ],
+      "type": [
+        "creation"
+      ],
+      "dataset": "windows.sysmon_operational"
+    },
+    "user": {
+      "domain": "WIN-5OSDUJBR958",
+      "name": "Administrator",
+      "id": "S-1-5-18"
+    }
+  },
+  "fields": {
+    "file.path": [
+      "C:\\Users\\Administrator\\Desktop\\a3.exe"
+    ],
+    "elastic_agent.version": [
+      "9.5.4+build202609161310"
+    ],
+    "event.category": [
+      "file"
+    ],
+    "process.name.text": [
+      "WinRAR.exe"
+    ],
+    "host.os.name.text": [
+      "Windows Server 2019 Datacenter Evaluation"
+    ],
+    "winlog.provider_guid": [
+      "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"
+    ],
+    "winlog.provider_name": [
+      "Microsoft-Windows-Sysmon"
+    ],
+    "host.hostname": [
+      "WIN-5OSDUJBR958"
+    ],
+    "process.pid": [
+      7564
+    ],
+    "winlog.computer_name": [
+      "WIN-5OSDUJBR958"
+    ],
+    "host.mac": [
+      "00-0C-29-8C-6A-95"
+    ],
+    "winlog.process.pid": [
+      3016
+    ],
+    "agent.name.text": [
+      "WIN-5OSDUJBR958"
+    ],
+    "host.os.version": [
+      "10.0"
+    ],
+    "winlog.record_id": [
+      "30521"
+    ],
+    "host.os.name": [
+      "Windows Server 2019 Datacenter Evaluation"
+    ],
+    "log.level": [
+      "information"
+    ],
+    "agent.name": [
+      "WIN-5OSDUJBR958"
+    ],
+    "host.name": [
+      "win-5osdujbr958"
+    ],
+    "event.agent_id_status": [
+      "verified"
+    ],
+    "event.kind": [
+      "event"
+    ],
+    "winlog.version": [
+      2
+    ],
+    "file.path.text": [
+      "C:\\Users\\Administrator\\Desktop\\a3.exe"
+    ],
+    "host.os.type": [
+      "windows"
+    ],
+    "user.id": [
+      "S-1-5-18"
+    ],
+    "input.type": [
+      "winlog"
+    ],
+    "data_stream.type": [
+      "logs"
+    ],
+    "related.user": [
+      "Administrator"
+    ],
+    "host.architecture": [
+      "x86_64"
+    ],
+    "process.name": [
+      "WinRAR.exe"
+    ],
+    "event.provider": [
+      "Microsoft-Windows-Sysmon"
+    ],
+    "event.code": [
+      "11"
+    ],
+    "agent.id": [
+      "1e7ea189-cd12-4870-b8f4-2f1102bc27c8"
+    ],
+    "ecs.version": [
+      "8.17.0"
+    ],
+    "event.created": [
+      "2026-09-29T07:48:59.747Z"
+    ],
+    "agent.version": [
+      "9.5.4"
+    ],
+    "file.extension": [
+      "exe"
+    ],
+    "host.os.family": [
+      "windows"
+    ],
+    "winlog.process.thread.id": [
+      4932
+    ],
+    "winlog.event_data.CreationUtcTime": [
+      "2026-09-29 07:48:58.287"
+    ],
+    "user.name": [
+      "Administrator"
+    ],
+    "process.entity_id": [
+      "{388CDFF0-6D69-6ABB-DC00-000000001000}"
+    ],
+    "host.os.build": [
+      "17763.3650"
+    ],
+    "winlog.user.type": [
+      "User"
+    ],
+    "host.ip": [
+      "10.10.12.20"
+    ],
+    "process.executable.caseless": [
+      "c:\\program files\\winrar\\winrar.exe"
+    ],
+    "agent.type": [
+      "filebeat"
+    ],
+    "process.executable.text": [
+      "C:\\Program Files\\WinRAR\\WinRAR.exe"
+    ],
+    "event.module": [
+      "windows"
+    ],
+    "host.os.kernel": [
+      "10.0.17763.3650 (WinBuild.160101.0800)"
+    ],
+    "elastic_agent.snapshot": [
+      false
+    ],
+    "user.domain": [
+      "WIN-5OSDUJBR958"
+    ],
+    "host.id": [
+      "388cdff0-c84b-4aa6-b136-56b2623720db"
+    ],
+    "process.name.caseless": [
+      "winrar.exe"
+    ],
+    "process.executable": [
+      "C:\\Program Files\\WinRAR\\WinRAR.exe"
+    ],
+    "winlog.user.identifier": [
+      "S-1-5-18"
+    ],
+    "file.directory": [
+      "C:\\Users\\Administrator\\Desktop"
+    ],
+    "winlog.task": [
+      "File created (rule: FileCreate)"
+    ],
+    "winlog.user.domain": [
+      "NT AUTHORITY"
+    ],
+    "elastic_agent.id": [
+      "1e7ea189-cd12-4870-b8f4-2f1102bc27c8"
+    ],
+    "data_stream.namespace": [
+      "default"
+    ],
+    "file.name": [
+      "a3.exe"
+    ],
+    "message": [
+      "File created:\nRuleName: -\nUtcTime: 2026-09-29 07:48:58.287\nProcessGuid: {388CDFF0-6D69-6ABB-DC00-000000001000}\nProcessId: 7564\nImage: C:\\Program Files\\WinRAR\\WinRAR.exe\nTargetFilename: C:\\Users\\Administrator\\Desktop\\a3.exe\nCreationUtcTime: 2026-09-29 07:48:58.287\nUser: WIN-5OSDUJBR958\\Administrator"
+    ],
+    "winlog.event_id": [
+      "11"
+    ],
+    "winlog.user.name": [
+      "SYSTEM"
+    ],
+    "event.action": [
+      "FileCreate"
+    ],
+    "event.ingested": [
+      "2026-09-29T07:49:04.000Z"
+    ],
+    "@timestamp": [
+      "2026-09-29T07:48:58.287Z"
+    ],
+    "winlog.channel": [
+      "Microsoft-Windows-Sysmon/Operational"
+    ],
+    "host.os.platform": [
+      "windows"
+    ],
+    "data_stream.dataset": [
+      "windows.sysmon_operational"
+    ],
+    "event.type": [
+      "creation"
+    ],
+    "winlog.opcode": [
+      "Info"
+    ],
+    "agent.ephemeral_id": [
+      "1be6ad6e-6c73-44df-bcec-251c2658cdf7"
+    ],
+    "event.dataset": [
+      "windows.sysmon_operational"
+    ],
+    "user.name.text": [
+      "Administrator"
+    ]
+  }
+}

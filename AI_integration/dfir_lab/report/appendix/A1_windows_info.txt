@@ -1,0 +1,19 @@
+vol -f .\PhysicalMemory.dd windows.info
+Volatility 3 Framework 2.28.0
+
+Variable        Value
+Kernel Base     0xf8055cea3000
+DTB             0x1ad000
+Is64Bit         True
+IsPAE           False
+layer_name      0 WindowsIntel32e
+memory_layer    1 FileLayer
+KdVersionBlock  0xf8055d2a3f10
+Major/Minor     15.17763
+MachineType     34404
+KeNumberProcessors      12
+SystemTime      2026-09-29 07:51:03+00:00
+NtSystemRoot    C:\Windows
+NtProductType   NtProductServer
+NtMajorVersion  10
+NtMinorVersion  0

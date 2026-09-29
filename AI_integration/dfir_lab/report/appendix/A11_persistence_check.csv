@@ -1,0 +1,145 @@
+"@timestamp","_id","_ignored","_index","_score","agent.ephemeral_id","agent.id","agent.name","agent.type","agent.version","data_stream.dataset","data_stream.namespace","data_stream.type","ecs.version","elastic_agent.id","elastic_agent.snapshot","elastic_agent.version","event.action","event.agent_id_status","event.code","event.created","event.dataset","event.ingested","event.kind","event.provider","host.architecture","host.hostname","host.id","host.ip","host.mac","host.name","host.os.build","host.os.family","host.os.kernel","host.os.name","host.os.name.text","host.os.platform","host.os.type","host.os.version","input.type","log.level",message,"winlog.channel","winlog.computer_name","winlog.event_data.CommandLine","winlog.event_data.Company","winlog.event_data.CurrentDirectory","winlog.event_data.Description","winlog.event_data.FileVersion","winlog.event_data.Hashes","winlog.event_data.Image","winlog.event_data.IntegrityLevel","winlog.event_data.LogonGuid","winlog.event_data.LogonId","winlog.event_data.OriginalFileName","winlog.event_data.ParentCommandLine","winlog.event_data.ParentImage","winlog.event_data.ParentProcessGuid","winlog.event_data.ParentProcessId","winlog.event_data.ParentUser","winlog.event_data.ProcessGuid","winlog.event_data.ProcessId","winlog.event_data.Product","winlog.event_data.RuleName","winlog.event_data.TerminalSessionId","winlog.event_data.User","winlog.event_data.UtcTime","winlog.event_id","winlog.opcode","winlog.process.pid","winlog.process.thread.id","winlog.provider_guid","winlog.provider_name","winlog.record_id","winlog.task","winlog.user.domain","winlog.user.identifier","winlog.user.name","winlog.user.type","winlog.version"
+"Sep 29, 2026 @ 08:12:26.766","AaDsOO-q7muFHSX81bDx","-",".ds-logs-winlog.winlog-default-2026.09.19-000001","-","7ce95c48-92be-4d9e-99eb-d2a1ab984254","1e7ea189-cd12-4870-b8f4-2f1102bc27c8","WIN-5OSDUJBR958",filebeat,"9.5.4","winlog.winlog",default,logs,"8.0.0","1e7ea189-cd12-4870-b8f4-2f1102bc27c8",false,"9.5.4+build202609161310","Process Create (rule: ProcessCreate)",verified,1,"Sep 29, 2026 @ 08:12:27.780","winlog.winlog","Sep 29, 2026 @ 08:12:32.000",event,"Microsoft-Windows-Sysmon","x86_64","WIN-5OSDUJBR958","388cdff0-c84b-4aa6-b136-56b2623720db","10.10.12.20","00-0C-29-8C-6A-95","win-5osdujbr958","17763.3650",windows,"10.0.17763.3650 (WinBuild.160101.0800)","Windows Server 2019 Datacenter Evaluation","Windows Server 2019 Datacenter Evaluation",windows,windows,"10.0",winlog,information,"Process Create:
+RuleName: technique_id=T1543.003,technique_name=Windows Service
+UtcTime: 2026-09-29 08:12:26.759
+ProcessGuid: {388CDFF0-72EA-6ABB-8B00-000000001100}
+ProcessId: 3540
+Image: C:\Windows\System32\sc.exe
+FileVersion: 10.0.17763.1 (WinBuild.160101.0800)
+Description: Service Control Manager Configuration Tool
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: sc.exe
+CommandLine: C:\Windows\system32\sc.exe start pushtoinstall registration
+CurrentDirectory: C:\Windows\system32\
+User: NT AUTHORITY\SYSTEM
+LogonGuid: {388CDFF0-7235-6ABB-E703-000000000000}
+LogonId: 0x3e7
+TerminalSessionId: 0
+IntegrityLevel: System
+Hashes: SHA1=622FA2729408E5F467A592223219DA7C547E7CC7,MD5=ABB56882148DE65D53ABFC55544A49A8,SHA256=78097C7CD0E57902536C60B7FA17528C313DB20869E5F944223A0BA4C801D39B,IMPHASH=35A7FFDE18D444A92D32C8B2879450FF
+ParentProcessGuid: {388CDFF0-7236-6ABB-2400-000000001100}
+ParentProcessId: 1736
+ParentImage: C:\Windows\System32\svchost.exe
+ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
+ParentUser: NT AUTHORITY\SYSTEM","Microsoft-Windows-Sysmon/Operational","WIN-5OSDUJBR958","C:\Windows\system32\sc.exe start pushtoinstall registration","Microsoft Corporation","C:\Windows\system32\","Service Control Manager Configuration Tool","10.0.17763.1 (WinBuild.160101.0800)","SHA1=622FA2729408E5F467A592223219DA7C547E7CC7,MD5=ABB56882148DE65D53ABFC55544A49A8,SHA256=78097C7CD0E57902536C60B7FA17528C313DB20869E5F944223A0BA4C801D39B,IMPHASH=35A7FFDE18D444A92D32C8B2879450FF","C:\Windows\System32\sc.exe",System,"{388CDFF0-7235-6ABB-E703-000000000000}",0x3e7,"sc.exe","C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule","C:\Windows\System32\svchost.exe","{388CDFF0-7236-6ABB-2400-000000001100}",1736,"NT AUTHORITY\SYSTEM","{388CDFF0-72EA-6ABB-8B00-000000001100}",3540,"Microsoft® Windows® Operating System","technique_id=T1543.003,technique_name=Windows Service",0,"NT AUTHORITY\SYSTEM","2026-09-29 08:12:26.759",1,Info,"3,048","5,800","{5770385F-C22A-43E0-BF4C-06F5698FFBD9}","Microsoft-Windows-Sysmon",31774,"Process Create (rule: ProcessCreate)","NT AUTHORITY","S-1-5-18",SYSTEM,User,5
+"Sep 29, 2026 @ 08:10:27.381","AaDsN--q7muFHSU70TIq","-",".ds-logs-winlog.winlog-default-2026.09.19-000001","-","7ce95c48-92be-4d9e-99eb-d2a1ab984254","1e7ea189-cd12-4870-b8f4-2f1102bc27c8","WIN-5OSDUJBR958",filebeat,"9.5.4","winlog.winlog",default,logs,"8.0.0","1e7ea189-cd12-4870-b8f4-2f1102bc27c8",false,"9.5.4+build202609161310","Process Create (rule: ProcessCreate)",verified,1,"Sep 29, 2026 @ 08:10:27.630","winlog.winlog","Sep 29, 2026 @ 08:10:37.000",event,"Microsoft-Windows-Sysmon","x86_64","WIN-5OSDUJBR958","388cdff0-c84b-4aa6-b136-56b2623720db","10.10.12.20","00-0C-29-8C-6A-95","win-5osdujbr958","17763.3650",windows,"10.0.17763.3650 (WinBuild.160101.0800)","Windows Server 2019 Datacenter Evaluation","Windows Server 2019 Datacenter Evaluation",windows,windows,"10.0",winlog,information,"Process Create:
+RuleName: technique_id=T1012,technique_name=Query Registry
+UtcTime: 2026-09-29 08:10:27.379
+ProcessGuid: {388CDFF0-7273-6ABB-8100-000000001100}
+ProcessId: 748
+Image: C:\Windows\System32\reg.exe
+FileVersion: 10.0.17763.1 (WinBuild.160101.0800)
+Description: Registry Console Tool
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: reg.exe
+CommandLine: C:\Windows\system32\reg.exe  query hklm\software\microsoft\windows\softwareinventorylogging /v collectionstate /reg:64
+CurrentDirectory: C:\Windows\system32\
+User: NT AUTHORITY\SYSTEM
+LogonGuid: {388CDFF0-7235-6ABB-E703-000000000000}
+LogonId: 0x3e7
+TerminalSessionId: 0
+IntegrityLevel: System
+Hashes: SHA1=429DF8371B437209D79DC97978C33157D1A71C4B,MD5=8A93ACAC33151793F8D52000071C0B06,SHA256=19316D4266D0B776D9B2A05D5903D8CBC8F0EA1520E9C2A7E6D5960B6FA4DCAF,IMPHASH=BE482BE427FE212CFEF2CDA0E61F19AC
+ParentProcessGuid: {388CDFF0-7273-6ABB-8000-000000001100}
+ParentProcessId: 612
+ParentImage: C:\Windows\System32\cmd.exe
+ParentCommandLine: C:\Windows\system32\cmd.exe /c C:\Windows\system32\reg.exe query hklm\software\microsoft\windows\softwareinventorylogging /v collectionstate /reg:64
+ParentUser: NT AUTHORITY\SYSTEM","Microsoft-Windows-Sysmon/Operational","WIN-5OSDUJBR958","C:\Windows\system32\reg.exe  query hklm\software\microsoft\windows\softwareinventorylogging /v collectionstate /reg:64","Microsoft Corporation","C:\Windows\system32\","Registry Console Tool","10.0.17763.1 (WinBuild.160101.0800)","SHA1=429DF8371B437209D79DC97978C33157D1A71C4B,MD5=8A93ACAC33151793F8D52000071C0B06,SHA256=19316D4266D0B776D9B2A05D5903D8CBC8F0EA1520E9C2A7E6D5960B6FA4DCAF,IMPHASH=BE482BE427FE212CFEF2CDA0E61F19AC","C:\Windows\System32\reg.exe",System,"{388CDFF0-7235-6ABB-E703-000000000000}",0x3e7,"reg.exe","C:\Windows\system32\cmd.exe /c C:\Windows\system32\reg.exe query hklm\software\microsoft\windows\softwareinventorylogging /v collectionstate /reg:64","C:\Windows\System32\cmd.exe","{388CDFF0-7273-6ABB-8000-000000001100}",612,"NT AUTHORITY\SYSTEM","{388CDFF0-7273-6ABB-8100-000000001100}",748,"Microsoft® Windows® Operating System","technique_id=T1012,technique_name=Query Registry",0,"NT AUTHORITY\SYSTEM","2026-09-29 08:10:27.379",1,Info,"3,048","5,800","{5770385F-C22A-43E0-BF4C-06F5698FFBD9}","Microsoft-Windows-Sysmon",31743,"Process Create (rule: ProcessCreate)","NT AUTHORITY","S-1-5-18",SYSTEM,User,5
+"Sep 29, 2026 @ 07:54:16.873","AaDsKO-q7muFHSVdlbsc","-",".ds-logs-winlog.winlog-default-2026.09.19-000001","-","1be6ad6e-6c73-44df-bcec-251c2658cdf7","1e7ea189-cd12-4870-b8f4-2f1102bc27c8","WIN-5OSDUJBR958",filebeat,"9.5.4","winlog.winlog",default,logs,"8.0.0","1e7ea189-cd12-4870-b8f4-2f1102bc27c8",false,"9.5.4+build202609161310","Process Create (rule: ProcessCreate)",verified,1,"Sep 29, 2026 @ 07:54:18.482","winlog.winlog","Sep 29, 2026 @ 07:54:23.000",event,"Microsoft-Windows-Sysmon","x86_64","WIN-5OSDUJBR958","388cdff0-c84b-4aa6-b136-56b2623720db","10.10.12.20","00-0C-29-8C-6A-95","win-5osdujbr958","17763.3650",windows,"10.0.17763.3650 (WinBuild.160101.0800)","Windows Server 2019 Datacenter Evaluation","Windows Server 2019 Datacenter Evaluation",windows,windows,"10.0",winlog,information,"Process Create:
+RuleName: technique_id=T1543.003,technique_name=Windows Service
+UtcTime: 2026-09-29 07:54:16.871
+ProcessGuid: {388CDFF0-6EA8-6ABB-0001-000000001000}
+ProcessId: 1848
+Image: C:\Windows\System32\sc.exe
+FileVersion: 10.0.17763.1 (WinBuild.160101.0800)
+Description: Service Control Manager Configuration Tool
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: sc.exe
+CommandLine: C:\Windows\system32\sc.exe start w32time task_started
+CurrentDirectory: C:\Windows\system32\
+User: NT AUTHORITY\LOCAL SERVICE
+LogonGuid: {388CDFF0-6B33-6ABB-E503-000000000000}
+LogonId: 0x3e5
+TerminalSessionId: 0
+IntegrityLevel: System
+Hashes: SHA1=622FA2729408E5F467A592223219DA7C547E7CC7,MD5=ABB56882148DE65D53ABFC55544A49A8,SHA256=78097C7CD0E57902536C60B7FA17528C313DB20869E5F944223A0BA4C801D39B,IMPHASH=35A7FFDE18D444A92D32C8B2879450FF
+ParentProcessGuid: {388CDFF0-6B33-6ABB-2300-000000001000}
+ParentProcessId: 1692
+ParentImage: C:\Windows\System32\svchost.exe
+ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
+ParentUser: NT AUTHORITY\SYSTEM","Microsoft-Windows-Sysmon/Operational","WIN-5OSDUJBR958","C:\Windows\system32\sc.exe start w32time task_started","Microsoft Corporation","C:\Windows\system32\","Service Control Manager Configuration Tool","10.0.17763.1 (WinBuild.160101.0800)","SHA1=622FA2729408E5F467A592223219DA7C547E7CC7,MD5=ABB56882148DE65D53ABFC55544A49A8,SHA256=78097C7CD0E57902536C60B7FA17528C313DB20869E5F944223A0BA4C801D39B,IMPHASH=35A7FFDE18D444A92D32C8B2879450FF","C:\Windows\System32\sc.exe",System,"{388CDFF0-6B33-6ABB-E503-000000000000}",0x3e5,"sc.exe","C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule","C:\Windows\System32\svchost.exe","{388CDFF0-6B33-6ABB-2300-000000001000}",1692,"NT AUTHORITY\SYSTEM","{388CDFF0-6EA8-6ABB-0001-000000001000}",1848,"Microsoft® Windows® Operating System","technique_id=T1543.003,technique_name=Windows Service",0,"NT AUTHORITY\LOCAL SERVICE","2026-09-29 07:54:16.871",1,Info,"3,016","4,932","{5770385F-C22A-43E0-BF4C-06F5698FFBD9}","Microsoft-Windows-Sysmon",30693,"Process Create (rule: ProcessCreate)","NT AUTHORITY","S-1-5-18",SYSTEM,User,5
+"Sep 29, 2026 @ 07:43:31.294","AaDsHu-q7muFHSWUhmLI","-",".ds-logs-winlog.winlog-default-2026.09.19-000001","-","1be6ad6e-6c73-44df-bcec-251c2658cdf7","1e7ea189-cd12-4870-b8f4-2f1102bc27c8","WIN-5OSDUJBR958",filebeat,"9.5.4","winlog.winlog",default,logs,"8.0.0","1e7ea189-cd12-4870-b8f4-2f1102bc27c8",false,"9.5.4+build202609161310","Process Create (rule: ProcessCreate)",verified,1,"Sep 29, 2026 @ 07:43:32.324","winlog.winlog","Sep 29, 2026 @ 07:43:42.000",event,"Microsoft-Windows-Sysmon","x86_64","WIN-5OSDUJBR958","388cdff0-c84b-4aa6-b136-56b2623720db","10.10.12.20","00-0C-29-8C-6A-95","win-5osdujbr958","17763.3650",windows,"10.0.17763.3650 (WinBuild.160101.0800)","Windows Server 2019 Datacenter Evaluation","Windows Server 2019 Datacenter Evaluation",windows,windows,"10.0",winlog,information,"Process Create:
+RuleName: technique_id=T1543.003,technique_name=Windows Service
+UtcTime: 2026-09-29 07:43:31.293
+ProcessGuid: {388CDFF0-6C23-6ABB-BE00-000000001000}
+ProcessId: 5672
+Image: C:\Windows\System32\sc.exe
+FileVersion: 10.0.17763.1 (WinBuild.160101.0800)
+Description: Service Control Manager Configuration Tool
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: sc.exe
+CommandLine: C:\Windows\system32\sc.exe start wuauserv
+CurrentDirectory: C:\Windows\system32\
+User: NT AUTHORITY\SYSTEM
+LogonGuid: {388CDFF0-6B32-6ABB-E703-000000000000}
+LogonId: 0x3e7
+TerminalSessionId: 0
+IntegrityLevel: System
+Hashes: SHA1=622FA2729408E5F467A592223219DA7C547E7CC7,MD5=ABB56882148DE65D53ABFC55544A49A8,SHA256=78097C7CD0E57902536C60B7FA17528C313DB20869E5F944223A0BA4C801D39B,IMPHASH=35A7FFDE18D444A92D32C8B2879450FF
+ParentProcessGuid: {388CDFF0-6B33-6ABB-2300-000000001000}
+ParentProcessId: 1692
+ParentImage: C:\Windows\System32\svchost.exe
+ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
+ParentUser: NT AUTHORITY\SYSTEM","Microsoft-Windows-Sysmon/Operational","WIN-5OSDUJBR958","C:\Windows\system32\sc.exe start wuauserv","Microsoft Corporation","C:\Windows\system32\","Service Control Manager Configuration Tool","10.0.17763.1 (WinBuild.160101.0800)","SHA1=622FA2729408E5F467A592223219DA7C547E7CC7,MD5=ABB56882148DE65D53ABFC55544A49A8,SHA256=78097C7CD0E57902536C60B7FA17528C313DB20869E5F944223A0BA4C801D39B,IMPHASH=35A7FFDE18D444A92D32C8B2879450FF","C:\Windows\System32\sc.exe",System,"{388CDFF0-6B32-6ABB-E703-000000000000}",0x3e7,"sc.exe","C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule","C:\Windows\System32\svchost.exe","{388CDFF0-6B33-6ABB-2300-000000001000}",1692,"NT AUTHORITY\SYSTEM","{388CDFF0-6C23-6ABB-BE00-000000001000}",5672,"Microsoft® Windows® Operating System","technique_id=T1543.003,technique_name=Windows Service",0,"NT AUTHORITY\SYSTEM","2026-09-29 07:43:31.293",1,Info,"3,016","4,932","{5770385F-C22A-43E0-BF4C-06F5698FFBD9}","Microsoft-Windows-Sysmon",30318,"Process Create (rule: ProcessCreate)","NT AUTHORITY","S-1-5-18",SYSTEM,User,5
+"Sep 29, 2026 @ 07:43:31.290","AaDsHu-q7muFHSWUhmLG","-",".ds-logs-winlog.winlog-default-2026.09.19-000001","-","1be6ad6e-6c73-44df-bcec-251c2658cdf7","1e7ea189-cd12-4870-b8f4-2f1102bc27c8","WIN-5OSDUJBR958",filebeat,"9.5.4","winlog.winlog",default,logs,"8.0.0","1e7ea189-cd12-4870-b8f4-2f1102bc27c8",false,"9.5.4+build202609161310","Process Create (rule: ProcessCreate)",verified,1,"Sep 29, 2026 @ 07:43:32.324","winlog.winlog","Sep 29, 2026 @ 07:43:42.000",event,"Microsoft-Windows-Sysmon","x86_64","WIN-5OSDUJBR958","388cdff0-c84b-4aa6-b136-56b2623720db","10.10.12.20","00-0C-29-8C-6A-95","win-5osdujbr958","17763.3650",windows,"10.0.17763.3650 (WinBuild.160101.0800)","Windows Server 2019 Datacenter Evaluation","Windows Server 2019 Datacenter Evaluation",windows,windows,"10.0",winlog,information,"Process Create:
+RuleName: technique_id=T1543.003,technique_name=Windows Service
+UtcTime: 2026-09-29 07:43:31.288
+ProcessGuid: {388CDFF0-6C23-6ABB-BB00-000000001000}
+ProcessId: 6788
+Image: C:\Windows\System32\sc.exe
+FileVersion: 10.0.17763.1 (WinBuild.160101.0800)
+Description: Service Control Manager Configuration Tool
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: sc.exe
+CommandLine: C:\Windows\system32\sc.exe start pushtoinstall registration
+CurrentDirectory: C:\Windows\system32\
+User: NT AUTHORITY\SYSTEM
+LogonGuid: {388CDFF0-6B32-6ABB-E703-000000000000}
+LogonId: 0x3e7
+TerminalSessionId: 0
+IntegrityLevel: System
+Hashes: SHA1=622FA2729408E5F467A592223219DA7C547E7CC7,MD5=ABB56882148DE65D53ABFC55544A49A8,SHA256=78097C7CD0E57902536C60B7FA17528C313DB20869E5F944223A0BA4C801D39B,IMPHASH=35A7FFDE18D444A92D32C8B2879450FF
+ParentProcessGuid: {388CDFF0-6B33-6ABB-2300-000000001000}
+ParentProcessId: 1692
+ParentImage: C:\Windows\System32\svchost.exe
+ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
+ParentUser: NT AUTHORITY\SYSTEM","Microsoft-Windows-Sysmon/Operational","WIN-5OSDUJBR958","C:\Windows\system32\sc.exe start pushtoinstall registration","Microsoft Corporation","C:\Windows\system32\","Service Control Manager Configuration Tool","10.0.17763.1 (WinBuild.160101.0800)","SHA1=622FA2729408E5F467A592223219DA7C547E7CC7,MD5=ABB56882148DE65D53ABFC55544A49A8,SHA256=78097C7CD0E57902536C60B7FA17528C313DB20869E5F944223A0BA4C801D39B,IMPHASH=35A7FFDE18D444A92D32C8B2879450FF","C:\Windows\System32\sc.exe",System,"{388CDFF0-6B32-6ABB-E703-000000000000}",0x3e7,"sc.exe","C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule","C:\Windows\System32\svchost.exe","{388CDFF0-6B33-6ABB-2300-000000001000}",1692,"NT AUTHORITY\SYSTEM","{388CDFF0-6C23-6ABB-BB00-000000001000}",6788,"Microsoft® Windows® Operating System","technique_id=T1543.003,technique_name=Windows Service",0,"NT AUTHORITY\SYSTEM","2026-09-29 07:43:31.288",1,Info,"3,016","4,932","{5770385F-C22A-43E0-BF4C-06F5698FFBD9}","Microsoft-Windows-Sysmon",30316,"Process Create (rule: ProcessCreate)","NT AUTHORITY","S-1-5-18",SYSTEM,User,5
+"Sep 29, 2026 @ 07:41:36.764","AaDsHO-q7muFHSXPhZnB","-",".ds-logs-winlog.winlog-default-2026.09.19-000001","-","1be6ad6e-6c73-44df-bcec-251c2658cdf7","1e7ea189-cd12-4870-b8f4-2f1102bc27c8","WIN-5OSDUJBR958",filebeat,"9.5.4","winlog.winlog",default,logs,"8.0.0","1e7ea189-cd12-4870-b8f4-2f1102bc27c8",false,"9.5.4+build202609161310","Process Create (rule: ProcessCreate)",verified,1,"Sep 29, 2026 @ 07:41:37.770","winlog.winlog","Sep 29, 2026 @ 07:41:46.000",event,"Microsoft-Windows-Sysmon","x86_64","WIN-5OSDUJBR958","388cdff0-c84b-4aa6-b136-56b2623720db","10.10.12.20","00-0C-29-8C-6A-95","win-5osdujbr958","17763.3650",windows,"10.0.17763.3650 (WinBuild.160101.0800)","Windows Server 2019 Datacenter Evaluation","Windows Server 2019 Datacenter Evaluation",windows,windows,"10.0",winlog,information,"Process Create:
+RuleName: technique_id=T1012,technique_name=Query Registry
+UtcTime: 2026-09-29 07:41:36.740
+ProcessGuid: {388CDFF0-6BB0-6ABB-AE00-000000001000}
+ProcessId: 8024
+Image: C:\Windows\System32\reg.exe
+FileVersion: 10.0.17763.1 (WinBuild.160101.0800)
+Description: Registry Console Tool
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: reg.exe
+CommandLine: C:\Windows\system32\reg.exe  query hklm\software\microsoft\windows\softwareinventorylogging /v collectionstate /reg:64
+CurrentDirectory: C:\Windows\system32\
+User: NT AUTHORITY\SYSTEM
+LogonGuid: {388CDFF0-6B32-6ABB-E703-000000000000}
+LogonId: 0x3e7
+TerminalSessionId: 0
+IntegrityLevel: System
+Hashes: SHA1=429DF8371B437209D79DC97978C33157D1A71C4B,MD5=8A93ACAC33151793F8D52000071C0B06,SHA256=19316D4266D0B776D9B2A05D5903D8CBC8F0EA1520E9C2A7E6D5960B6FA4DCAF,IMPHASH=BE482BE427FE212CFEF2CDA0E61F19AC
+ParentProcessGuid: {388CDFF0-6BB0-6ABB-AD00-000000001000}
+ParentProcessId: 7992
+ParentImage: C:\Windows\System32\cmd.exe
+ParentCommandLine: C:\Windows\system32\cmd.exe /c C:\Windows\system32\reg.exe query hklm\software\microsoft\windows\softwareinventorylogging /v collectionstate /reg:64
+ParentUser: NT AUTHORITY\SYSTEM","Microsoft-Windows-Sysmon/Operational","WIN-5OSDUJBR958","C:\Windows\system32\reg.exe  query hklm\software\microsoft\windows\softwareinventorylogging /v collectionstate /reg:64","Microsoft Corporation","C:\Windows\system32\","Registry Console Tool","10.0.17763.1 (WinBuild.160101.0800)","SHA1=429DF8371B437209D79DC97978C33157D1A71C4B,MD5=8A93ACAC33151793F8D52000071C0B06,SHA256=19316D4266D0B776D9B2A05D5903D8CBC8F0EA1520E9C2A7E6D5960B6FA4DCAF,IMPHASH=BE482BE427FE212CFEF2CDA0E61F19AC","C:\Windows\System32\reg.exe",System,"{388CDFF0-6B32-6ABB-E703-000000000000}",0x3e7,"reg.exe","C:\Windows\system32\cmd.exe /c C:\Windows\system32\reg.exe query hklm\software\microsoft\windows\softwareinventorylogging /v collectionstate /reg:64","C:\Windows\System32\cmd.exe","{388CDFF0-6BB0-6ABB-AD00-000000001000}",7992,"NT AUTHORITY\SYSTEM","{388CDFF0-6BB0-6ABB-AE00-000000001000}",8024,"Microsoft® Windows® Operating System","technique_id=T1012,technique_name=Query Registry",0,"NT AUTHORITY\SYSTEM","2026-09-29 07:41:36.740",1,Info,"3,016","4,932","{5770385F-C22A-43E0-BF4C-06F5698FFBD9}","Microsoft-Windows-Sysmon",30259,"Process Create (rule: ProcessCreate)","NT AUTHORITY","S-1-5-18",SYSTEM,User,5
