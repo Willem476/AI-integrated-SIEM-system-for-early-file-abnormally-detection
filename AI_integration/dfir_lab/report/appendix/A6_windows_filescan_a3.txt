@@ -1,4 +1,0 @@
-PS C:\Users\PC\Documents\Voltality_analysting\uploads\auto> Select-String -Path .\filescan.txt -Pattern "a3\.exe"
-filescan.txt:2076:0x9e8a705baeb0        \Users\Administrator\Desktop\a3.exe
-filescan.txt:2091:0x9e8a705bcad0        \Users\Administrator\Desktop\a3.exe
-filescan.txt:2094:0x9e8a705bd110        \Users\Administrator\Desktop\a3.exe
